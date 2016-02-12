@@ -1,5 +1,5 @@
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-[![Cocoapods compatible](https://img.shields.io/badge/Cocoapods-compatible-4BC51D.svg?style=flat)](https://cocoapods.org)
+[![CocoaPods compatible](https://img.shields.io/badge/CocoaPods-compatible-4BC51D.svg?style=flat)](https://cocoapods.org)
 ![Version](https://img.shields.io/cocoapods/v/IFACoreUI.svg)
 ![Licence](https://img.shields.io/cocoapods/l/IFACoreUI.svg)
 ![Platform](https://img.shields.io/cocoapods/p/IFACoreUI.svg)
@@ -16,7 +16,7 @@ Additional documentation and sample code are coming soon.
 
 ## How to integrate IFACoreUI ##
 
-IFACoreUI can be integrated to your project via Cocoapods or Carthage.
+IFACoreUI can be integrated to your project via CocoaPods or Carthage.
 
 ## Latest API Documentation ##
 
