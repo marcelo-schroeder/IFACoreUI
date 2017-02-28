@@ -1,1 +1,1 @@
-[FIX] Fixed bug in [IFAWorkInProgressModalViewManager showViewWithMessage:parentViewController:parentView:animated:completion:] that could cause a crash after deallocation under some circumstances.
+[NEW] IFAListViewController can now handle delete and duplicate functions for multiple selection.
