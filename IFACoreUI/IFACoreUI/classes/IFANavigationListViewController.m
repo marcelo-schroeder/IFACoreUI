@@ -21,27 +21,9 @@
 #import "IFACoreUI.h"
 
 @interface IFANavigationListViewController ()
-
-/**
- * Bar button item that provides managed object deletion in edit mode and supports multiple selection.
- * To use it, just add it to the array returned by ifa_editModeToolbarItems.
- */
 @property (nonatomic) UIBarButtonItem *deleteBarButtonItem;
-
-/**
- * Bar button item that provides managed object duplication functionality in edit mode.
- * To use it, just add it to the array returned by ifa_editModeToolbarItems.
- */
 @property (nonatomic) UIBarButtonItem *duplicateBarButtonItem;
-
-/**
- * Table view row action that provides managed object deletion functionality.
- */
 @property (nonatomic) UITableViewRowAction *deleteTableViewRowAction;
-
-/**
- * Table view row action that provides managed object duplication functionality.
- */
 @property (nonatomic) UITableViewRowAction *duplicateTableViewRowAction;
 @end
 
