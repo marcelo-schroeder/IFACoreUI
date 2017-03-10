@@ -1,4 +1,1 @@
-[FIX] Fixed bug in [IFAPersistenceManager manageDatabaseVersioningChangeWithSystemEntityConfigBundle:block:] that could cause the following error intermittently: Collection was mutated while being enumerated.
-[NEW] New appearance theme protocol method: [IFAAppearanceThemne prefersStatusBarHiddenForViewController:].
-[FIX] When form view controller presents a field of type IFAEntityConfigFieldTypeViewController, the ifa_presenter property is now set.
-[CHANGE] .gitignore updated.
+[FIX] Fixed bug in [IFAWorkInProgressModalViewManager showViewWithMessage:parentViewController:parentView:animated:completion:] that could cause a crash after deallocation under some circumstances.
