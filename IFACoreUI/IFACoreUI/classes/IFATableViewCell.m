@@ -88,9 +88,6 @@ NSString* const IFANotificationUserInfoKeyTableViewCellStateMask = @"IFANotifica
 #pragma mark Private
 
 - (void)postNotificationNamed:(NSString *)notificationName tableViewCellState:(UITableViewCellStateMask)tableViewCellState {
-    if (!self.shouldPostStateTransitionNotifications) {
-        return;
-    }
     NSNotification *notification = [NSNotification notificationWithName:notificationName
                                                                  object:[self class] userInfo:@{IFANotificationUserInfoKeyTableViewCellStateMask : @(tableViewCellState)}];
     [[NSNotificationCenter defaultCenter] postNotification:notification];

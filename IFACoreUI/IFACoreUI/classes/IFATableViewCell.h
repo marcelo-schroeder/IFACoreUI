@@ -31,7 +31,4 @@ extern NSString* const IFANotificationUserInfoKeyTableViewCellStateMask;
 @property (nonatomic, strong) NSIndexPath *indexPath;
 @property (nonatomic) BOOL swipedToDelete;
 
-MAYBE THIS SHOULD BE DONE AUTOMATICALLY BY THE FRAMEWORK????
-@property (nonatomic) BOOL shouldPostStateTransitionNotifications;
-
 @end

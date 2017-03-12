@@ -47,4 +47,11 @@
  */
 @property (nonatomic, readonly) UITableViewRowAction *duplicateTableViewRowAction;
 
+/**
+ * Returns YES if the any table view cell is showing actions, otherwise it returns NO.
+ * This property can be used, for instance, to avoid showing a toolbar when entering edit mode as a result of the user swiping a table view cell to reveal its actions.
+ * In that case, simply return an empty array from an overridden ifa_editModeToolbarItems method when this property is equal to YES.
+ */
+@property (nonatomic, readonly) BOOL showingTableViewCellActions;
+
 @end

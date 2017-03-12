@@ -25,6 +25,7 @@
 @property (nonatomic) UIBarButtonItem *duplicateBarButtonItem;
 @property (nonatomic) UITableViewRowAction *deleteTableViewRowAction;
 @property (nonatomic) UITableViewRowAction *duplicateTableViewRowAction;
+@property (nonatomic) BOOL showingTableViewCellActions;
 @end
 
 @implementation IFANavigationListViewController {
@@ -349,7 +350,15 @@
 
     self.editButtonItem.tag = IFABarItemTagEditButton;
     [self ifa_addRightBarButtonItem:self.editButtonItem];
-    
+
+    __weak typeof(self) weakSelf = self;
+    void (^block)(NSNotification *)=^(NSNotification *a_note) {
+        UITableViewCellStateMask tableViewCellStateMask = (UITableViewCellStateMask) ((NSNumber *) a_note.userInfo[IFANotificationUserInfoKeyTableViewCellStateMask]).unsignedIntegerValue;
+        weakSelf.showingTableViewCellActions = (tableViewCellStateMask & UITableViewCellStateShowingDeleteConfirmationMask);
+    };
+    [self ifa_addNotificationObserverForName:IFANotificationTableViewCellWillTransitionToState object:nil queue:nil usingBlock:block removalTime:IFAViewControllerNotificationObserverRemovalTimeDealloc];
+    [self ifa_addNotificationObserverForName:IFANotificationTableViewCellDidTransitionToState object:nil queue:nil usingBlock:block removalTime:IFAViewControllerNotificationObserverRemovalTimeDealloc];
+
 }
 
 -(void)viewWillAppear:(BOOL)animated{
