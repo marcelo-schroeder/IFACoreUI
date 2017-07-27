@@ -91,9 +91,6 @@
 }
 
 - (void)IFA_updateEditingToolbarStateForTableView:(UITableView *)tableView {
-    if (!(_deleteBarButtonItem || _duplicateBarButtonItem)) {
-        return;
-    }
     if (tableView.indexPathsForSelectedRows.count > 0) {
         self.deleteBarButtonItem.title = [NSString stringWithFormat:NSLocalizedStringFromTable(@"Delete (%@)", @"IFALocalizable", @"Delete (SELECTED_ITEMS_COUNT)"), @(tableView.indexPathsForSelectedRows.count)];
         self.deleteBarButtonItem.enabled = YES;
