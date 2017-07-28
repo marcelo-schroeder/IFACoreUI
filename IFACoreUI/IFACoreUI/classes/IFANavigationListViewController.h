@@ -23,7 +23,35 @@
 @class IFAFormViewController;
 
 @interface IFANavigationListViewController : IFAListViewController {
-
 }
+
+/**
+ * Bar button item that provides managed object deletion in edit mode and supports multiple selection.
+ * To use it, just add it to the array returned by ifa_editModeToolbarItems.
+ */
+@property (nonatomic, readonly) UIBarButtonItem *deleteBarButtonItem;
+
+/**
+ * Bar button item that provides managed object duplication functionality in edit mode.
+ * To use it, just add it to the array returned by ifa_editModeToolbarItems.
+ */
+@property (nonatomic, readonly) UIBarButtonItem *duplicateBarButtonItem;
+
+/**
+ * Table view row action that provides managed object deletion functionality.
+ */
+@property (nonatomic, readonly) UITableViewRowAction *deleteTableViewRowAction;
+
+/**
+ * Table view row action that provides managed object duplication functionality.
+ */
+@property (nonatomic, readonly) UITableViewRowAction *duplicateTableViewRowAction;
+
+/**
+ * Returns YES if the any table view cell is showing actions, otherwise it returns NO.
+ * This property can be used, for instance, to avoid showing a toolbar when entering edit mode as a result of the user swiping a table view cell to reveal its actions.
+ * In that case, simply return an empty array from an overridden ifa_editModeToolbarItems method when this property is equal to YES.
+ */
+@property (nonatomic, readonly) BOOL showingTableViewCellActions;
 
 @end

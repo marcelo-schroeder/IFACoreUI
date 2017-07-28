@@ -97,6 +97,46 @@
     return [self validationPredicateParameterProperty:a_propertyName string:@"SELF <= "];
 }
 
+- (void)duplicateToTarget:(NSManagedObject *)target ignoringKeys:(NSSet <NSString *> *_Nullable)ignoredKeys {
+    if (![target isMemberOfClass:[self class]]) {
+        return;
+    }
+
+    NSEntityDescription *entityDescription = self.objectID.entity;
+
+    // Set attributes
+    NSArray *attributeKeys = entityDescription.attributesByName.allKeys;
+    NSMutableDictionary *attributeKeysAndValues = [[self dictionaryWithValuesForKeys:attributeKeys] mutableCopy];
+    if (ignoredKeys) {
+        [attributeKeysAndValues removeObjectsForKeys:ignoredKeys.allObjects];
+    }
+    [target setValuesForKeysWithDictionary:attributeKeysAndValues];
+
+    // Set relationships
+    [entityDescription.relationshipsByName enumerateKeysAndObjectsUsingBlock:^(NSString *relationshipName, NSRelationshipDescription *relationshipDescription, BOOL *stop) {
+        id value = [self valueForKey:relationshipName];
+        if (!value) {
+            return;
+        }
+        if (!relationshipDescription.inverseRelationship.isToMany) {
+            NSString *destinationEntityName = relationshipDescription.destinationEntity.name;
+            if ([value isKindOfClass:[NSSet class]]) {
+                NSSet <NSManagedObject *> *childManagedObjects = value;
+                NSMutableSet <NSManagedObject *> *childManagedObjectDuplicates = [NSMutableSet new];
+                [childManagedObjects enumerateObjectsUsingBlock:^(NSManagedObject *childManagedObject, BOOL *innerStop) {
+                    NSManagedObject *childManagedObjectDuplicate = [NSClassFromString(destinationEntityName) ifa_instantiate];
+                    [childManagedObject duplicateToTarget:childManagedObjectDuplicate ignoringKeys:nil];
+                    [childManagedObjectDuplicates addObject:childManagedObjectDuplicate];
+                }];
+                value = childManagedObjectDuplicates;
+            } else {
+                return;
+            }
+        }
+        [target setValue:value forKey:relationshipName];
+    }];
+}
+
 + (instancetype)ifa_instantiate {
 	return [[IFAPersistenceManager sharedInstance] instantiate:[self description]];
 }

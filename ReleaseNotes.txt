@@ -1,1 +1,2 @@
-[FIX] Fixed bug in [IFAWorkInProgressModalViewManager showViewWithMessage:parentViewController:parentView:animated:completion:] that could cause a crash after deallocation under some circumstances.
+[NEW] IFAListViewController can now handle delete and duplicate functions with multiple selection via new properties: deleteBarButtonItem, duplicateBarButtonItem, deleteTableViewRowAction and duplicateTableViewRowAction.
+[NEW] New property in IFAListViewController: showingTableViewCellActions.

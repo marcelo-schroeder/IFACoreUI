@@ -20,6 +20,10 @@
 
 #import "IFACoreUI.h"
 
+NSString* const IFANotificationTableViewCellWillTransitionToState = @"IFANotificationTableViewCellWillTransitionToState";
+NSString* const IFANotificationTableViewCellDidTransitionToState = @"IFANotificationTableViewCellDidTransitionToState";
+
+NSString* const IFANotificationUserInfoKeyTableViewCellStateMask = @"IFANotificationUserInfoKeyTableViewCellStateMask";
 
 @implementation IFATableViewCell {
     
@@ -48,6 +52,7 @@
         [self.ifa_appearanceTheme setAppearanceForTableViewCell:self
                                         onWillTransitionToState:state];
     }
+    [self postNotificationNamed:IFANotificationTableViewCellWillTransitionToState tableViewCellState:state];
 }
 
 - (void)didTransitionToState:(UITableViewCellStateMask)state {
@@ -56,6 +61,7 @@
         [self.ifa_appearanceTheme setAppearanceForTableViewCell:self
                                         onDidTransitionToState:state];
     }
+    [self postNotificationNamed:IFANotificationTableViewCellDidTransitionToState tableViewCellState:state];
 }
 
 - (void)prepareForReuse {
@@ -77,6 +83,14 @@
 - (void)tintColorDidChange {
     [super tintColorDidChange];
     [self ifa_tintColorDidChange];
+}
+
+#pragma mark Private
+
+- (void)postNotificationNamed:(NSString *)notificationName tableViewCellState:(UITableViewCellStateMask)tableViewCellState {
+    NSNotification *notification = [NSNotification notificationWithName:notificationName
+                                                                 object:[self class] userInfo:@{IFANotificationUserInfoKeyTableViewCellStateMask : @(tableViewCellState)}];
+    [[NSNotificationCenter defaultCenter] postNotification:notification];
 }
 
 @end

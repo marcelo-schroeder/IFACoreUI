@@ -23,6 +23,11 @@
 @interface IFATableViewCell : UITableViewCell {
 }
 
+extern NSString* const IFANotificationTableViewCellWillTransitionToState;
+extern NSString* const IFANotificationTableViewCellDidTransitionToState;
+
+extern NSString* const IFANotificationUserInfoKeyTableViewCellStateMask;
+
 @property (nonatomic, strong) NSIndexPath *indexPath;
 @property (nonatomic) BOOL swipedToDelete;
 
