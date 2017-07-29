@@ -113,7 +113,7 @@
     if ([persistenceManager.entityConfig listReorderAllowedForObject:managedObjectDuplicate] && [managedObjectDuplicate respondsToSelector:NSSelectorFromString(@"seq")]) {
         [ignoredKeys addObject:@"seq"];
     }
-    [managedObjectOriginal duplicateToTarget:managedObjectDuplicate ignoringKeys:ignoredKeys];
+    [managedObjectOriginal ifa_duplicateToTarget:managedObjectDuplicate ignoringKeys:ignoredKeys];
     if ([managedObjectDuplicate conformsToProtocol:@protocol(IFADuplication)]) {
         id<IFADuplication> duplicate = (id <IFADuplication>) managedObjectDuplicate;
         duplicate.uniqueNameForDuplication = [IFADuplicationUtils nameForDuplicateOf:duplicate inItems:self.objects];
