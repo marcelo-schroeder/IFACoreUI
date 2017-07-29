@@ -38,6 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
  * This method copies all properties. It also copies relatioships with the exception of 1-to-1 relationships.
  * For many-to-many relationships, it also duplicates the children to a maximum of one hierarchical level.
  * @param target Managed object instance to duplicate into.
+ * @param ignoredKeys Keys to ignore when duplicating.
  */
 - (void)duplicateToTarget:(NSManagedObject *)target ignoringKeys:(NSSet <NSString *> *_Nullable)ignoredKeys;
 

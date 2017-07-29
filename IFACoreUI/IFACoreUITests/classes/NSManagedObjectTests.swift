@@ -20,27 +20,27 @@ class NSManagedObjectTests: IFACoreUITestCase {
     func testDuplicateToTarget() {
 
         // Given
-        let relatedManagedObject1 = TestCoreDataEntity5.ifa_instantiate()!
+        let relatedManagedObject1 = TestCoreDataEntity5.ifa_instantiate()
         relatedManagedObject1.attribute1 = "test-related-object-1"
         relatedManagedObject1.attribute2 = true;
-        let relatedManagedObject2 = TestCoreDataEntity5.ifa_instantiate()!
+        let relatedManagedObject2 = TestCoreDataEntity5.ifa_instantiate()
         relatedManagedObject2.attribute1 = "test-related-object-2"
         relatedManagedObject2.attribute2 = true;
-        let relatedManagedObject3 = TestCoreDataEntity5.ifa_instantiate()!
+        let relatedManagedObject3 = TestCoreDataEntity5.ifa_instantiate()
         relatedManagedObject3.attribute1 = "test-related-object-3"
         relatedManagedObject3.attribute2 = true;
 
-        let childManagedObject1 = TestCoreDataEntity4Child.ifa_instantiate()!
+        let childManagedObject1 = TestCoreDataEntity4Child.ifa_instantiate()
         childManagedObject1.attribute1 = "test-child-object-1"
         childManagedObject1.attribute2 = true;
-        let childManagedObject2 = TestCoreDataEntity4Child.ifa_instantiate()!
+        let childManagedObject2 = TestCoreDataEntity4Child.ifa_instantiate()
         childManagedObject2.attribute1 = "test-child-object-2"
         childManagedObject2.attribute2 = true;
-        let childManagedObject3 = TestCoreDataEntity4Child.ifa_instantiate()!
+        let childManagedObject3 = TestCoreDataEntity4Child.ifa_instantiate()
         childManagedObject3.attribute1 = "test-child-object-3"
         childManagedObject3.attribute2 = true;
 
-        let managedObject = TestCoreDataEntity4.ifa_instantiate()!
+        let managedObject = TestCoreDataEntity4.ifa_instantiate()
         managedObject.name = "Test Name"
         managedObject.attribute1 = "test-attribute1"
         managedObject.attribute2 = 1
@@ -53,12 +53,12 @@ class NSManagedObjectTests: IFACoreUITestCase {
         XCTAssertTrue(IFAPersistenceManager.sharedInstance().save())
         
         // When
-        let duplicate = TestCoreDataEntity4.ifa_instantiate()!
-        managedObject.duplicate(toTarget: duplicate)
+        let duplicate = TestCoreDataEntity4.ifa_instantiate()
+        managedObject.duplicate(toTarget: duplicate, ignoringKeys: nil)
         XCTAssertTrue(IFAPersistenceManager.sharedInstance().save())
         
         // Then
-        let allObjects = TestCoreDataEntity4.ifa_findAll()!
+        let allObjects = TestCoreDataEntity4.ifa_findAll()
         XCTAssertEqual(allObjects.count, 2)
         let managedObject1 = allObjects[0] as! TestCoreDataEntity4
         let managedObject2 = allObjects[1] as! TestCoreDataEntity4
