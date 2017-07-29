@@ -22,22 +22,6 @@
 
 @implementation NSManagedObject (IFACoreUI)
 
-#pragma mark - Private
-
-- (NSNumber*)validationPredicateParameterProperty:(NSString*)a_propertyName string:(NSString*)a_string{
-    NSNumber *l_value = nil;
-    for (NSPredicate *l_validationPredicate in [[self ifa_descriptionForProperty:a_propertyName] validationPredicates]) {
-        NSString *l_predicateFormat = [l_validationPredicate predicateFormat];
-        NSRange l_range = [l_predicateFormat rangeOfString:a_string];
-        if (l_range.location!=NSNotFound) {
-            NSNumberFormatter *l_numberFormatter = [[NSNumberFormatter alloc] init];
-            [l_numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
-            l_value = [l_numberFormatter numberFromString:[l_predicateFormat substringFromIndex:[a_string length]]];
-        }
-    }
-    return l_value;
-}
-
 #pragma mark - Public
 
 -(NSString*)ifa_stringId {
@@ -90,51 +74,15 @@
 }
 
 - (NSNumber*)ifa_minimumValueForProperty:(NSString*)a_propertyName{
-    return [self validationPredicateParameterProperty:a_propertyName string:@"SELF >= "];
+    return [self IFA_validationPredicateParameterProperty:a_propertyName string:@"SELF >= "];
 }
 
 - (NSNumber*)ifa_maximumValueForProperty:(NSString*)a_propertyName{
-    return [self validationPredicateParameterProperty:a_propertyName string:@"SELF <= "];
+    return [self IFA_validationPredicateParameterProperty:a_propertyName string:@"SELF <= "];
 }
 
-- (void)duplicateToTarget:(NSManagedObject *)target ignoringKeys:(NSSet <NSString *> *_Nullable)ignoredKeys {
-    if (![target isMemberOfClass:[self class]]) {
-        return;
-    }
-
-    NSEntityDescription *entityDescription = self.objectID.entity;
-
-    // Set attributes
-    NSArray *attributeKeys = entityDescription.attributesByName.allKeys;
-    NSMutableDictionary *attributeKeysAndValues = [[self dictionaryWithValuesForKeys:attributeKeys] mutableCopy];
-    if (ignoredKeys) {
-        [attributeKeysAndValues removeObjectsForKeys:ignoredKeys.allObjects];
-    }
-    [target setValuesForKeysWithDictionary:attributeKeysAndValues];
-
-    // Set relationships
-    [entityDescription.relationshipsByName enumerateKeysAndObjectsUsingBlock:^(NSString *relationshipName, NSRelationshipDescription *relationshipDescription, BOOL *stop) {
-        id value = [self valueForKey:relationshipName];
-        if (!value) {
-            return;
-        }
-        if (!relationshipDescription.inverseRelationship.isToMany) {
-            NSString *destinationEntityName = relationshipDescription.destinationEntity.name;
-            if ([value isKindOfClass:[NSSet class]]) {
-                NSSet <NSManagedObject *> *childManagedObjects = value;
-                NSMutableSet <NSManagedObject *> *childManagedObjectDuplicates = [NSMutableSet new];
-                [childManagedObjects enumerateObjectsUsingBlock:^(NSManagedObject *childManagedObject, BOOL *innerStop) {
-                    NSManagedObject *childManagedObjectDuplicate = [NSClassFromString(destinationEntityName) ifa_instantiate];
-                    [childManagedObject duplicateToTarget:childManagedObjectDuplicate ignoringKeys:nil];
-                    [childManagedObjectDuplicates addObject:childManagedObjectDuplicate];
-                }];
-                value = childManagedObjectDuplicates;
-            } else {
-                return;
-            }
-        }
-        [target setValue:value forKey:relationshipName];
-    }];
+- (void)ifa_duplicateToTarget:(NSManagedObject *)target ignoringKeys:(NSSet <NSString *> *_Nullable)ignoredKeys {
+    [self IFA_duplicateToTarget:target ignoringKeys:ignoredKeys originalParent:nil newParent:nil];
 }
 
 + (instancetype)ifa_instantiate {
@@ -158,6 +106,68 @@
 + (void)ifa_deleteAllAndSaveWithValidationAlertPresenter:(UIViewController *)a_validationAlertPresenter {
     [self ifa_deleteAllWithValidationAlertPresenter:a_validationAlertPresenter];
     [[IFAPersistenceManager sharedInstance] save];
+}
+
+#pragma mark - Private
+
+- (NSNumber*)IFA_validationPredicateParameterProperty:(NSString*)a_propertyName string:(NSString*)a_string{
+    NSNumber *l_value = nil;
+    for (NSPredicate *l_validationPredicate in [[self ifa_descriptionForProperty:a_propertyName] validationPredicates]) {
+        NSString *l_predicateFormat = [l_validationPredicate predicateFormat];
+        NSRange l_range = [l_predicateFormat rangeOfString:a_string];
+        if (l_range.location!=NSNotFound) {
+            NSNumberFormatter *l_numberFormatter = [[NSNumberFormatter alloc] init];
+            [l_numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
+            l_value = [l_numberFormatter numberFromString:[l_predicateFormat substringFromIndex:[a_string length]]];
+        }
+    }
+    return l_value;
+}
+
+- (void)IFA_duplicateToTarget:(NSManagedObject *)target ignoringKeys:(NSSet <NSString *> *_Nullable)ignoredKeys originalParent:(NSManagedObject *)originalParent newParent:(NSManagedObject *)newParent {
+    if (![target isMemberOfClass:[self class]]) {
+        return;
+    }
+    
+    NSEntityDescription *entityDescription = self.objectID.entity;
+    
+    // Set attributes
+    NSArray *attributeKeys = entityDescription.attributesByName.allKeys;
+    NSMutableDictionary *attributeKeysAndValues = [[self dictionaryWithValuesForKeys:attributeKeys] mutableCopy];
+    if (ignoredKeys) {
+        [attributeKeysAndValues removeObjectsForKeys:ignoredKeys.allObjects];
+    }
+    [target setValuesForKeysWithDictionary:attributeKeysAndValues];
+    
+    // Set relationships
+    [entityDescription.relationshipsByName enumerateKeysAndObjectsUsingBlock:^(NSString *relationshipName, NSRelationshipDescription *relationshipDescription, BOOL *stop) {
+        id value = [self valueForKey:relationshipName];
+        if (!value) {
+            return;
+        }
+        if (relationshipDescription.isToMany) {
+            if (!relationshipDescription.inverseRelationship.isToMany) {
+                NSString *destinationEntityName = relationshipDescription.destinationEntity.name;
+                if ([value isKindOfClass:[NSSet class]]) {
+                    NSSet <NSManagedObject *> *childManagedObjects = value;
+                    NSMutableSet <NSManagedObject *> *childManagedObjectDuplicates = [NSMutableSet new];
+                    [childManagedObjects enumerateObjectsUsingBlock:^(NSManagedObject *childManagedObject, BOOL *innerStop) {
+                        NSManagedObject *childManagedObjectDuplicate = [NSClassFromString(destinationEntityName) ifa_instantiate];
+                        [childManagedObject IFA_duplicateToTarget:childManagedObjectDuplicate ignoringKeys:nil originalParent:self newParent:target];
+                        [childManagedObjectDuplicates addObject:childManagedObjectDuplicate];
+                    }];
+                    value = childManagedObjectDuplicates;
+                } else {
+                    return;
+                }
+            }
+        } else {
+            if (value && [value isKindOfClass:[NSManagedObject class]] && value == originalParent) {
+                value = newParent;
+            }
+        }
+        [target setValue:value forKey:relationshipName];
+    }];
 }
 
 @end

@@ -40,7 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @param target Managed object instance to duplicate into.
  * @param ignoredKeys Keys to ignore when duplicating.
  */
-- (void)duplicateToTarget:(NSManagedObject *)target ignoringKeys:(NSSet <NSString *> *_Nullable)ignoredKeys;
+- (void)ifa_duplicateToTarget:(NSManagedObject *)target ignoringKeys:(NSSet <NSString *> *_Nullable)ignoredKeys;
 
 + (instancetype)ifa_instantiate;
 + (NSMutableArray *)ifa_findAll;

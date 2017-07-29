@@ -54,7 +54,7 @@ class NSManagedObjectTests: IFACoreUITestCase {
         
         // When
         let duplicate = TestCoreDataEntity4.ifa_instantiate()
-        managedObject.duplicate(toTarget: duplicate, ignoringKeys: nil)
+        managedObject.ifa_duplicate(toTarget: duplicate, ignoringKeys: Set(["attribute1"]))
         XCTAssertTrue(IFAPersistenceManager.sharedInstance().save())
         
         // Then
@@ -63,22 +63,24 @@ class NSManagedObjectTests: IFACoreUITestCase {
         let managedObject1 = allObjects[0] as! TestCoreDataEntity4
         let managedObject2 = allObjects[1] as! TestCoreDataEntity4
         XCTAssertEqual(managedObject1.name, managedObject2.name)
-        XCTAssertEqual(managedObject1.attribute1, managedObject2.attribute1)
         XCTAssertEqual(managedObject1.attribute2, managedObject2.attribute2)
         XCTAssertEqual(managedObject1.entity5ToOne, managedObject2.entity5ToOne)
         XCTAssertEqual(managedObject1.entity5ToMany, managedObject2.entity5ToMany)
         XCTAssertEqual(managedObject1.children!.count, managedObject2.children!.count)
-        XCTAssertTrue(managedObject1.children!.count > 0)
+        XCTAssertEqual(managedObject1.children!.count, 2)
         XCTAssertNotEqual(managedObject1.children!, managedObject2.children!)
-        XCTAssertEqual(managedObject2.child, nil)
+        XCTAssertEqual(managedObject2.child, childManagedObject3)
         for managedObject1Child in managedObject1.children! {
             let managedObject2Child = managedObject2.children!.filter({ (managedObject2Child: TestCoreDataEntity4Child) -> Bool in
+                XCTAssertEqual(managedObject2Child.childrenParent, managedObject2)
                 return managedObject2Child.attribute1 == managedObject1Child.attribute1
             }).first!
             XCTAssertEqual(managedObject1Child.attribute1, managedObject2Child.attribute1)
             XCTAssertEqual(managedObject1Child.attribute2, managedObject2Child.attribute2)
-            XCTAssertNotEqual(managedObject1Child.childrenParent, managedObject2Child.childrenParent)
+            XCTAssertEqual(managedObject1Child.childrenParent, managedObject1)
         }
+        XCTAssertNil(duplicate.attribute1)
+        
 
     }
 
