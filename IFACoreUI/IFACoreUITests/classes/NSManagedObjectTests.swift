@@ -80,7 +80,6 @@ class NSManagedObjectTests: IFACoreUITestCase {
             XCTAssertEqual(managedObject1Child.childrenParent, managedObject1)
         }
         XCTAssertNil(duplicate.attribute1)
-        
 
     }
 
