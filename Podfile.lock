@@ -1,5 +1,5 @@
 PODS:
-  - IFAFoundation (1.1.1)
+  - IFAFoundation (1.2.0)
   - IFATestingSupport (1.0.3):
     - OCHamcrest (~> 4)
     - OCMock (~> 3)
@@ -7,21 +7,17 @@ PODS:
   - OCMock (3.2)
 
 DEPENDENCIES:
-  - IFAFoundation (from `/Users/mschroeder/myfiles/projects/Xcode/IFAFoundation/IFAFoundation_development`)
+  - IFAFoundation
   - IFATestingSupport
   - OCHamcrest
   - OCMock
 
-EXTERNAL SOURCES:
-  IFAFoundation:
-    :path: /Users/mschroeder/myfiles/projects/Xcode/IFAFoundation/IFAFoundation_development
-
 SPEC CHECKSUMS:
-  IFAFoundation: 98bdf4108af7464ef2a6b72f8fdc37da55e30a85
+  IFAFoundation: 4478fb8b6c9d03f78d69aea94a9cdb65321a1f46
   IFATestingSupport: 6558e25b6d4bac3fc11caec7ffe05e6e4bfbca77
   OCHamcrest: cd63d27f48a266d4412c0b295b01b8f0940efa81
   OCMock: 28def049ef47f996b515a8eeea958be7ccab2dbb
 
-PODFILE CHECKSUM: df35f869ff5abf07f65ffefafe9c32a63376c7b3
+PODFILE CHECKSUM: 9b537ade41792254f8eb2516f0c475231f5be4c1
 
-COCOAPODS: 1.2.0
+COCOAPODS: 1.2.1
