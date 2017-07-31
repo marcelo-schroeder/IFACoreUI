@@ -19,7 +19,6 @@
 //
 
 #import "IFACoreUI.h"
-#import "IFAFoundation-Swift.h"
 
 @interface IFANavigationListViewController ()
 @property (nonatomic) UIBarButtonItem *deleteBarButtonItem;
