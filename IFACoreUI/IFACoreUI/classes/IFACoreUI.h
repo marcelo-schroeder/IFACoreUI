@@ -47,7 +47,6 @@ FOUNDATION_EXPORT const unsigned char IFACoreUIVersionString[];
 #import "IFA_HPTextViewInternal.h"
 
 @import IFAFoundation;
-#import <IFAFoundation/IFAFoundation-Swift.h>
 
 #import "IFADefaultAppearanceTheme.h"
 #import "IFAAbstractFieldEditorViewController.h"
