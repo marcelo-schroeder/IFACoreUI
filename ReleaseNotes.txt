@@ -1,2 +1,1 @@
-[NEW] IFAListViewController can now handle delete and duplicate functions with multiple selection via new properties: deleteBarButtonItem, duplicateBarButtonItem, deleteTableViewRowAction and duplicateTableViewRowAction.
-[NEW] New property in IFAListViewController: showingTableViewCellActions.
+[FIX] It now catches documentation issues that might prevent release to Cocoapods trunk at build time.
