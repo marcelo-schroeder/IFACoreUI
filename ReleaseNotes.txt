@@ -1,1 +1,1 @@
-[FIX] It now catches documentation issues that might prevent release to Cocoapods trunk at build time.
+[NEW] Added new property to UIViewController: ifa_typedNotificationObservers.
