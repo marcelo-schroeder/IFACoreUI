@@ -1,1 +1,1 @@
-[NEW] Added new property to UIViewController: ifa_typedNotificationObservers.
+[FIX] Fixed issue with previous Pod release: incorrect software version was released.
