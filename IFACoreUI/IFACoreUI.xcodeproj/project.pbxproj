@@ -13,6 +13,7 @@
 		10738AC52DC25D5BF2E5EDB8 /* IFAAlertContainerViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 107384428BEF6DEBAD7F15B9 /* IFAAlertContainerViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		174362A41F4F17B6E3EAE072 /* Pods_IFACoreUI_IFACoreUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D66EC50FEB0F337F4814482 /* Pods_IFACoreUI_IFACoreUITests.framework */; };
 		9AEB589B9A361A1AED2FEBF9 /* Pods_IFACoreUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2D268FE50130BD6609DA4C0 /* Pods_IFACoreUI.framework */; };
+		F72C559E1F423E2A00CF0AD1 /* UIViewController+IFACoreUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72C559D1F423E2A00CF0AD1 /* UIViewController+IFACoreUI.swift */; };
 		F7650C471BE95BBD00B97932 /* IFA_HPGrowingTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = F7650B441BE95BBD00B97932 /* IFA_HPGrowingTextView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F7650C481BE95BBD00B97932 /* IFA_HPGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = F7650B451BE95BBD00B97932 /* IFA_HPGrowingTextView.m */; };
 		F7650C491BE95BBD00B97932 /* IFA_HPTextViewInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = F7650B461BE95BBD00B97932 /* IFA_HPTextViewInternal.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -410,6 +411,7 @@
 		F7156C0F1BE953A30009EFF4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F7156C141BE953A30009EFF4 /* IFACoreUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IFACoreUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7156C1B1BE953A30009EFF4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F72C559D1F423E2A00CF0AD1 /* UIViewController+IFACoreUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+IFACoreUI.swift"; sourceTree = "<group>"; };
 		F75C51701BF133FD0003174D /* IFACoreUI.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; name = IFACoreUI.podspec; path = ../IFACoreUI.podspec; sourceTree = "<group>"; };
 		F7650B441BE95BBD00B97932 /* IFA_HPGrowingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IFA_HPGrowingTextView.h; sourceTree = "<group>"; };
 		F7650B451BE95BBD00B97932 /* IFA_HPGrowingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IFA_HPGrowingTextView.m; sourceTree = "<group>"; };
@@ -1143,6 +1145,7 @@
 				F7650C461BE95BBD00B97932 /* UIWebView+IFACoreUI.m */,
 				107382B94669F01368812EAA /* IFAAlertContainerViewController.m */,
 				107384428BEF6DEBAD7F15B9 /* IFAAlertContainerViewController.h */,
+				F72C559D1F423E2A00CF0AD1 /* UIViewController+IFACoreUI.swift */,
 			);
 			path = classes;
 			sourceTree = "<group>";
@@ -1556,7 +1559,7 @@
 				TargetAttributes = {
 					F7156C091BE953A30009EFF4 = {
 						CreatedOnToolsVersion = 7.1;
-						LastSwiftMigration = 0820;
+						LastSwiftMigration = 0830;
 					};
 					F7156C131BE953A30009EFF4 = {
 						CreatedOnToolsVersion = 7.1;
@@ -1793,6 +1796,7 @@
 				F7650CDF1BE95BBD00B97932 /* IFAPreferencesManager.m in Sources */,
 				F7650CF41BE95BBD00B97932 /* IFASwitchTableViewCell.m in Sources */,
 				F7650D181BE95BBD00B97932 /* IFAWorkInProgressModalViewManager.m in Sources */,
+				F72C559E1F423E2A00CF0AD1 /* UIViewController+IFACoreUI.swift in Sources */,
 				F7650D041BE95BBD00B97932 /* IFATextViewContainer.m in Sources */,
 				F7650C5E1BE95BBD00B97932 /* IFAAsynchronousWorkManager.m in Sources */,
 				F7650CC61BE95BBD00B97932 /* IFANavigationController.m in Sources */,
@@ -2034,6 +2038,7 @@
 			baseConfigurationReference = 645A28568BBF910CD6D6C0E2 /* Pods-IFACoreUI.debug.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEFINES_MODULE = YES;
@@ -2046,6 +2051,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.infoaccent.IFACoreUI;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -2055,6 +2061,7 @@
 			baseConfigurationReference = 588D6BC28A79A07788C7CCBF /* Pods-IFACoreUI.release.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEFINES_MODULE = YES;

@@ -1,1 +1,1 @@
-[FIX] It now catches documentation issues that might prevent release to Cocoapods trunk at build time.
+[FIX] Fixed issue with previous Pod release: incorrect software version was released.
