@@ -5,7 +5,6 @@
 //  Created by: Marcelo Schroeder
 //
 
-#import <IFATestingSupport/IFACommonTests.h>
 #import "IFACoreUITestCase.h"
 #import "TestCoreDataEntity1+CoreDataClass.h"
 #import "TestCoreDataEntity1+CoreDataProperties.h"
@@ -16,6 +15,7 @@
 #import "IFAPersistentEntityChangeObserver.h"
 #import "TestCoreDataEntity3+CoreDataClass.h"
 #import "TestCoreDataEntity3+CoreDataProperties.h"
+@import IFATestingSupport;
 
 @interface IFAPersistentEntityChangeObserverTests : IFACoreUITestCase <IFAPersistentEntityChangeObserverDelegate>
 @property (nonatomic, strong) NSMutableDictionary *delegateCallbacksByClass;

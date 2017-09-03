@@ -17,9 +17,9 @@
 //  limitations under the License.
 //
 
-#import "IFACommonTests.h"
 @import IFACoreUI;
 #import "IFACoreUITestCase.h"
+@import OCHamcrest;
 
 @interface IFAPagingStateManagerTests : IFACoreUITestCase
 @property(nonatomic, strong) IFAPagingStateManager *p_pagingStateManager;
