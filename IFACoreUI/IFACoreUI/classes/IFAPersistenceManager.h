@@ -170,13 +170,13 @@
 * Executes performBlock: on the receiver's managedObjectContext property instance and makes the main managed object context the instance returned by currentManagedObjectContext for the thread executing the block provided.
 * @param a_block Block to execute.
 */
-- (void)performOnMainManagedObjectContextQueue:(void (^)())a_block;
+- (void)performOnMainManagedObjectContextQueue:(void (^)(void))a_block;
 
 /**
 * Executes performBlockAndWait: on the receiver's managedObjectContext property instance and makes the main managed object context the instance returned by currentManagedObjectContext for the thread executing the block provided.
 * @param a_block Block to execute.
 */
-- (void)performAndWaitOnMainManagedObjectContextQueue:(void (^)())a_block;
+- (void)performAndWaitOnMainManagedObjectContextQueue:(void (^)(void))a_block;
 
 /**
 * Executes performBlock: on the NSManagedObjectContext instance provided and makes that managed object context the instance returned by currentManagedObjectContext for the thread executing the block provided.
@@ -184,7 +184,7 @@
 * @param a_block Block to execute.
 */
 - (void)performOnQueueOfManagedObjectContext:(NSManagedObjectContext *)a_managedObjectContext
-                                       block:(void (^)())a_block;
+                                       block:(void (^)(void))a_block;
 
 /**
 * Executes performBlockAndWait: on the NSManagedObjectContext instance provided and makes that managed object context the instance returned by currentManagedObjectContext for the thread executing the block provided.
@@ -192,13 +192,13 @@
 * @param a_block Block to execute.
 */
 - (void)performAndWaitOnQueueOfManagedObjectContext:(NSManagedObjectContext *)a_managedObjectContext
-                                              block:(void (^)())a_block;
+                                              block:(void (^)(void))a_block;
 
 /**
 * Synchronously executes the block provided on the current thread and makes the main managed object context the instance returned by currentManagedObjectContext for the duration of the provided block's execution.
 * @param a_block Block to execute.
 */
-- (void)performOnCurrentThreadForMainManagedObjectContext:(void (^)())a_block;
+- (void)performOnCurrentThreadForMainManagedObjectContext:(void (^)(void))a_block;
 
 /**
 * Synchronously executes the block provided on the current thread and makes the managed object context provided the instance returned by currentManagedObjectContext for the duration of the provided block's execution.
@@ -206,7 +206,7 @@
 * @param a_block Block to execute.
 */
 - (void)performOnCurrentThreadWithManagedObjectContext:(NSManagedObjectContext *)a_managedObjectContext
-                                                 block:(void (^)())a_block;
+                                                 block:(void (^)(void))a_block;
 
 -(NSMutableArray*)managedObjectsForIds:(NSArray*)a_managedObjectIds;
 

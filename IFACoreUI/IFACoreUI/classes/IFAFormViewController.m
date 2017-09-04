@@ -762,7 +762,7 @@ static NSString *const k_sectionHeaderFooterReuseId = @"sectionHeaderFooter";
                 NSString *title = [NSString stringWithFormat:NSLocalizedStringFromTable(@"%@ modified externally", @"IFALocalizable", @"ENTITY_LABEL modified externally"),
                                                              objectLabel];
                 NSString *message = NSLocalizedStringFromTable(@"Editing will be cancelled and changes discarded.", @"IFALocalizable", nil);
-                void (^actionBlock)() = ^{
+                void (^actionBlock)(void) = ^{
                     [weakSelf IFA_quitEditingForced:YES];
                 };
                 [self ifa_presentAlertControllerWithTitle:title
@@ -784,10 +784,10 @@ static NSString *const k_sectionHeaderFooterReuseId = @"sectionHeaderFooter";
     if (self.editing) {
         if (!a_forced && self.IFA_isManagedObject && ([IFAPersistenceManager sharedInstance].isCurrentManagedObjectDirty || self.IFA_textFieldTextChanged)) {
             __weak __typeof(self) l_weakSelf = self;
-            void (^destructiveActionBlock)() = ^{
+            void (^destructiveActionBlock)(void) = ^{
                 [l_weakSelf IFA_rollbackAndRestoreNonEditingState];
             };
-            void (^cancelBlock)() = ^{
+            void (^cancelBlock)(void) = ^{
                 // Notify that any pending context switch has been denied
                 [l_weakSelf replyToContextSwitchRequestWithGranted:NO];
             };
@@ -2083,7 +2083,7 @@ withAlertPresenterViewController:nil];
     if (!self.ifa_sessionCompletionNotified && !self.IFA_preparingForDismissalAfterRollback) {  // Table should not be reloaded in these cases (i.e. form will be dismissed soon)
 
         // Reload table view data to update form state
-        void (^tableViewDataReloadBlock)() = ^{
+        void (^tableViewDataReloadBlock)(void) = ^{
             if (animated) {
                 [UIView transitionWithView:self.view
                                   duration:IFAAnimationDuration

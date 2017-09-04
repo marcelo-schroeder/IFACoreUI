@@ -1383,7 +1383,7 @@ typedef NS_ENUM(NSUInteger, IFANavigationBarButtonItemsSide) {
     if (animated) {
 
         a_childViewController.view.alpha = 0;
-        void (^animations)() = ^{
+        void (^animations)(void) = ^{
             a_childViewController.view.alpha = 1;
         };
         [UIView animateWithDuration:a_animationDuration
@@ -1427,7 +1427,7 @@ typedef NS_ENUM(NSUInteger, IFANavigationBarButtonItemsSide) {
 
     if (animated) {
 
-        void (^animations)() = ^{
+        void (^animations)(void) = ^{
             weakSelf.view.alpha = 0;
         };
         [UIView animateWithDuration:a_animationDuration
@@ -1525,7 +1525,7 @@ typedef NS_ENUM(NSUInteger, IFANavigationBarButtonItemsSide) {
                                             message:(NSString *)a_message
                                 settingsButtonTitle:(NSString *)a_settingsButtonTitle
                                   cancelButtonTitle:(NSString *)a_cancelButtonTitle
-                          cancelButtonActionHandler:(void (^)())a_cancelButtonActionHandler {
+                          cancelButtonActionHandler:(void (^)(void))a_cancelButtonActionHandler {
     NSMutableArray *l_alertActions = [NSMutableArray new];
     void (^cancelButtonActionHandler)(UIAlertAction *) = ^(UIAlertAction *action) {
         if (a_cancelButtonActionHandler) {
@@ -1551,7 +1551,7 @@ withAlertPresenterViewController:nil];
 
 - (void)ifa_presentAlertControllerWithTitle:(NSString *)a_title
                                     message:(NSString *)a_message
-                                actionBlock:(void (^)())a_actionBlock {
+                                actionBlock:(void (^)(void))a_actionBlock {
     void (^handler)(UIAlertAction *) = ^(UIAlertAction *action) {
         if (a_actionBlock) {
             a_actionBlock();
@@ -1569,7 +1569,7 @@ withAlertPresenterViewController:nil];
 
 - (void)ifa_presentAlertControllerWithTitle:(NSString *)a_title message:(NSString *)a_message
                                       style:(UIAlertControllerStyle)a_style
-                          actionButtonTitle:(NSString *)a_actionButtonTitle actionBlock:(void (^)())a_actionBlock {
+                          actionButtonTitle:(NSString *)a_actionButtonTitle actionBlock:(void (^)(void))a_actionBlock {
     UIAlertAction *mainAction = [UIAlertAction actionWithTitle:a_actionButtonTitle
                                                          style:UIAlertActionStyleDefault
                                                        handler:^(UIAlertAction *action) {
@@ -1587,8 +1587,8 @@ withAlertPresenterViewController:nil];
 
 - (void)ifa_presentAlertControllerWithTitle:(NSString *)a_title message:(NSString *)a_message
                destructiveActionButtonTitle:(NSString *)a_destructiveActionButtonTitle
-                     destructiveActionBlock:(void (^)())a_destructiveActionBlock
-                                cancelBlock:(void (^)())a_cancelBlock {
+                     destructiveActionBlock:(void (^)(void))a_destructiveActionBlock
+                                cancelBlock:(void (^)(void))a_cancelBlock {
     void (^destructiveActionHandler)(UIAlertAction *) = ^(UIAlertAction *action) {
         if (a_destructiveActionBlock) {
             a_destructiveActionBlock();

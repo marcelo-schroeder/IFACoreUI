@@ -186,7 +186,7 @@
                                             message:(NSString *)a_message
                                 settingsButtonTitle:(NSString *)a_settingsButtonTitle
                                   cancelButtonTitle:(NSString *)a_cancelButtonTitle
-                          cancelButtonActionHandler:(void (^)())a_cancelButtonActionHandler;
+                          cancelButtonActionHandler:(void (^)(void))a_cancelButtonActionHandler;
 
 /**
 * Presents an instance of a UIAlertController with title and message provided.
@@ -197,7 +197,7 @@
 */
 - (void)ifa_presentAlertControllerWithTitle:(NSString *)a_title
                                     message:(NSString *)a_message
-                                actionBlock:(void (^)())a_actionBlock;
+                                actionBlock:(void (^)(void))a_actionBlock;
 
 /**
 * Presents an instance of a UIAlertController according to the specifications provided.
@@ -210,7 +210,7 @@
 */
 - (void)ifa_presentAlertControllerWithTitle:(NSString *)a_title message:(NSString *)a_message
                                       style:(UIAlertControllerStyle)a_style
-                          actionButtonTitle:(NSString *)a_actionButtonTitle actionBlock:(void (^)())a_actionBlock;
+                          actionButtonTitle:(NSString *)a_actionButtonTitle actionBlock:(void (^)(void))a_actionBlock;
 
 /**
 * Presents a destructive action version of a UIAlertController according to the specifications provided.
@@ -223,8 +223,8 @@
 */
 - (void)ifa_presentAlertControllerWithTitle:(NSString *)a_title message:(NSString *)a_message
                destructiveActionButtonTitle:(NSString *)a_destructiveActionButtonTitle
-                     destructiveActionBlock:(void (^)())a_destructiveActionBlock
-                                cancelBlock:(void (^)())a_cancelBlock;
+                     destructiveActionBlock:(void (^)(void))a_destructiveActionBlock
+                                cancelBlock:(void (^)(void))a_cancelBlock;
 
 - (void)ifa_onKeyboardNotification:(NSNotification *)a_notification;
 

@@ -78,8 +78,8 @@
     self.IFA_window.userInteractionEnabled = modal;
 }
 
-- (void)setOverlayTapActionBlock:(void (^)())overlayTapActionBlock {
-    _overlayTapActionBlock = overlayTapActionBlock;
+- (void)setOverlayTapActionBlock:(void (^)(void))overlayTapActionBlock {
+    overlayTapActionBlock = overlayTapActionBlock;
     if (_overlayTapActionBlock) {
         self.modal = YES;
     }
@@ -94,7 +94,7 @@
     [self IFA_updateHudViewControllerOverlayTapActionBlock];
 }
 
-- (void)setChromeTapActionBlock:(void (^)())chromeTapActionBlock {
+- (void)setChromeTapActionBlock:(void (^)(void))chromeTapActionBlock {
     _chromeTapActionBlock = chromeTapActionBlock;
     if (_chromeTapActionBlock) {
         self.modal = YES;

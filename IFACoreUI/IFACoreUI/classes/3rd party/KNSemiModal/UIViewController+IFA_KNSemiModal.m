@@ -187,7 +187,7 @@ static BOOL c_presentedInLandscapeInterfaceOrientation;
     
 }
 
-- (void)dismissSemiModalViewWithCompletionBlock:(void (^)())a_completionBlock {
+- (void)dismissSemiModalViewWithCompletionBlock:(void (^)(void))a_completionBlock {
     UIView * modal = self.semiModalView;
     UIView * target = [self parentTarget];
     UIView * overlay = (target.subviews)[target.subviews.count - 2];

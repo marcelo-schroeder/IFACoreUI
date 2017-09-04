@@ -57,7 +57,7 @@ withAlertPresenterViewController:nil];
                                                            style:UIAlertActionStyleDefault
                                                          handler:nil]];
     }
-    void (^l_presentationBlock)() = ^{
+    void (^l_presentationBlock)(void) = ^{
         [a_presenterViewController ifa_presentAlertControllerWithTitle:title
                                                                message:message
                                                                  style:UIAlertControllerStyleAlert
