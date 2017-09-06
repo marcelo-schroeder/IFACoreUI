@@ -27,5 +27,19 @@ extension UIViewController {
             objc_setAssociatedObject(self, &AssociatedObjectHandleTypedNotificationObservers, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
+
+    /**
+     Best attempt to determine whether the navigation bar back button is being displayed.
+     
+     - returns: true if the navigation bar back button is being displayed otherwise it returns false.
+     */
+    @objc public func ifa_showingNavigationBarBackButton() -> Bool {
+        guard let navigationController = self.navigationController else { return false }
+        return navigationController.viewControllers.count > 0
+            && navigationController.topViewController! != navigationController.viewControllers.first!
+            && self.navigationItem.hidesBackButton == false
+            && navigationController.isNavigationBarHidden == false
+        
+    }
     
 }

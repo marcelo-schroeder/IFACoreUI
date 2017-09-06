@@ -1,1 +1,2 @@
-[FIX] Fixed issue with previous Pod release: incorrect software version was released.
+[NEW] New function added to the UIViewController's extension: ifa_showingNavigationBarBackButton().
+[CHANGE] For iOS 11 and greater: added some smarts to improve layout of left navigation bar buttons when a back button is showing.
