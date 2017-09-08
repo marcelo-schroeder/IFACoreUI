@@ -19,8 +19,8 @@
 #import <CoreLocation/CoreLocation.h>
 
 typedef NS_ENUM(NSUInteger, IFALocationAuthorizationType){
-    IFALocationAuthorizationTypeAlways,     // Permission to use location services whenever the app is running.
     IFALocationAuthorizationTypeWhenInUse,  // Permission to use location services while the app is in the foreground.
+    IFALocationAuthorizationTypeAlways,     // Permission to use location services whenever the app is running.
 };
 
 static NSString *const LocationManagerLocationAuthorizationStatusChangeNotificationUserInfoKeyStatus = @"status";
