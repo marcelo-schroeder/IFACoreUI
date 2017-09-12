@@ -45,18 +45,15 @@ performLocationServicesChecksWithAlertPresenterViewController:(UIViewController 
 
 + (void)sendLocationAuthorizationStatusChangeNotificationWithStatus:(CLAuthorizationStatus)a_status;
 
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "OCUnusedMethodInspection"
 /**
-* Shows an alert with a standard message for when the user's location cannot be obtained.
+* Shows an alert with a standard title for when the user's location cannot be obtained.
 * @param a_presenterViewController View controller to be used for presenting any alerts from.
 */
 + (void)showLocationServicesAlertWithPresenterViewController:(UIViewController *)a_presenterViewController;
-#pragma clang diagnostic pop
 
 /**
-* Shows an alert with a standard message for when the user's location cannot be obtained. The suffix for the message can be provided.
-* @param a_message String to be appended to the standard message.
+* Shows an alert with a standard title and provided message for when the user's location cannot be obtained.
+* @param a_message Message to be displayed in the alert.
 * @param a_presenterViewController View controller to be used for presenting any alerts from.
 */
 + (void)showLocationServicesAlertWithMessage:(NSString *)a_message

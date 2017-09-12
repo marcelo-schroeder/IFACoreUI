@@ -35,43 +35,8 @@
     return _underlyingLocationManager;
 }
 
-+ (void)showLocationServicesAlertWithMessage:(NSString *)a_message
-                          showSettingsOption:(BOOL)a_shouldShowSettingsOption
-                     presenterViewController:(UIViewController *)a_presenterViewController {
-    NSString *message = a_message;
-    NSString *title = NSLocalizedStringFromTable(@"Unable to obtain your location", @"IFALocalizable", nil);
-    NSMutableArray *l_alertActions = [NSMutableArray new];
-    if (a_shouldShowSettingsOption) {
-        [l_alertActions addObject:[UIAlertAction actionWithTitle:@"Cancel"
-                                                           style:UIAlertActionStyleCancel
-                                                         handler:nil]];
-        void (^settingsHandlerBlock)(UIAlertAction *) = ^(UIAlertAction *action) {
-            [IFAUIUtils  openUrl:[NSURL URLWithString:UIApplicationOpenSettingsURLString]
-withAlertPresenterViewController:nil];
-        };
-        [l_alertActions addObject:[UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"Settings", @"IFALocalizable", nil)
-                                                           style:UIAlertActionStyleDefault
-                                                         handler:settingsHandlerBlock]];
-    } else {
-        [l_alertActions addObject:[UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"Continue", @"IFALocalizable", nil)
-                                                           style:UIAlertActionStyleDefault
-                                                         handler:nil]];
-    }
-    void (^l_presentationBlock)(void) = ^{
-        [a_presenterViewController ifa_presentAlertControllerWithTitle:title
-                                                               message:message
-                                                                 style:UIAlertControllerStyleAlert
-                                                               actions:l_alertActions
-                                                            completion:nil];
-    };
-    if (a_presenterViewController.presentedViewController) {
-        if ([a_presenterViewController.presentedViewController isKindOfClass:[UIAlertController class]]) {
-            [a_presenterViewController.presentedViewController dismissViewControllerAnimated:NO
-                                                                                  completion:l_presentationBlock];
-        }
-    }else{
-        l_presentationBlock();
-    }
++ (void)showLocationServicesAlertWithPresenterViewController:(UIViewController *)a_presenterViewController {
+    [self showLocationServicesAlertWithMessage:@"" presenterViewController:a_presenterViewController];
 }
 
 + (void)showLocationServicesAlertWithMessage:(NSString *)a_message
@@ -79,13 +44,6 @@ withAlertPresenterViewController:nil];
     [self showLocationServicesAlertWithMessage:a_message showSettingsOption:NO
                        presenterViewController:a_presenterViewController];
 }
-
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "OCUnusedMethodInspection"
-+ (void)showLocationServicesAlertWithPresenterViewController:(UIViewController *)a_presenterViewController {
-    [self showLocationServicesAlertWithMessage:@"" presenterViewController:a_presenterViewController];
-}
-#pragma clang diagnostic pop
 
 + (instancetype)sharedInstance {
     static dispatch_once_t c_dispatchOncePredicate;
@@ -111,16 +69,16 @@ withAlertPresenterViewController:nil];
     return MKMetersBetweenMapPoints(mapPoint1, mapPoint2);
 }
 
-+ (BOOL)
-performLocationServicesChecksWithAlertPresenterViewController:(UIViewController *)a_alertPresenterViewController {
++ (BOOL)performLocationServicesChecksWithAlertPresenterViewController:(UIViewController *)a_alertPresenterViewController {
     if (![CLLocationManager locationServicesEnabled]) {
-        NSString *message = NSLocalizedStringFromTable(@"Location Services are currently disabled. Please enable them in the Privacy section of the Settings app.", @"IFALocalizable", nil);
+        NSString *message = NSLocalizedStringFromTable(@"Location Services are currently disabled.\n\nPlease enable them in the Privacy section of the Settings app.", @"IFALocalizable", nil);
         [self showLocationServicesAlertWithMessage:message
                            presenterViewController:a_alertPresenterViewController];
         return NO;
     }
 
-    switch ([CLLocationManager authorizationStatus]) {
+    CLAuthorizationStatus authorisationStatus = [CLLocationManager authorizationStatus];
+    switch (authorisationStatus) {
         case kCLAuthorizationStatusNotDetermined:
         case kCLAuthorizationStatusAuthorizedAlways:
         case kCLAuthorizationStatusAuthorizedWhenInUse:
@@ -134,13 +92,13 @@ performLocationServicesChecksWithAlertPresenterViewController:(UIViewController 
         }
         case kCLAuthorizationStatusDenied:
         {
-            NSString *message = NSLocalizedStringFromTable(@"Location access is currently disabled for this app. Please enable it in the Location section of Settings. Tap the Settings button below to open Settings.", @"IFALocalizable", nil);
+            NSString *message = NSLocalizedStringFromTable(@"Location access is currently disabled for this app.\n\nPlease enable it in the Location section of Settings.\n\nTap the Settings button below to open Settings.", @"IFALocalizable", nil);
             [self showLocationServicesAlertWithMessage:message showSettingsOption:YES
                                presenterViewController:a_alertPresenterViewController];
             return NO;
         }
         default:
-            NSAssert(NO, @"Unexpected authorisation status: %u", [CLLocationManager authorizationStatus]);
+            NSAssert(NO, @"Unexpected authorisation status: %u", authorisationStatus);
             return NO;
     }
 
@@ -153,6 +111,66 @@ performLocationServicesChecksWithAlertPresenterViewController:(UIViewController 
                                                postingStyle:NSPostASAP
                                                coalesceMask:NSNotificationNoCoalescing
                                                    forModes:nil];
+}
+
+#pragma mark - Private
+
++ (void)showLocationServicesAlertWithTitle:(NSString *)a_title
+                                   message:(NSString *)a_message
+                   presenterViewController:(UIViewController *)a_presenterViewController {
+    [self showLocationServicesAlertWithTitle:a_title
+                                     message:a_message
+                          showSettingsOption:YES
+                     presenterViewController:a_presenterViewController];
+}
+
++ (void)showLocationServicesAlertWithMessage:(NSString *)a_message
+                          showSettingsOption:(BOOL)a_shouldShowSettingsOption
+                     presenterViewController:(UIViewController *)a_presenterViewController {
+    NSString *title = NSLocalizedStringFromTable(@"Unable to obtain your location", @"IFALocalizable", nil);
+    [self showLocationServicesAlertWithTitle:title
+                                     message:a_message
+                          showSettingsOption:a_shouldShowSettingsOption
+                     presenterViewController:a_presenterViewController];
+}
+
++ (void)showLocationServicesAlertWithTitle:(NSString *)a_title
+                                   message:(NSString *)a_message
+                        showSettingsOption:(BOOL)a_shouldShowSettingsOption
+                   presenterViewController:(UIViewController *)a_presenterViewController {
+    NSString *message = a_message;
+    NSMutableArray *l_alertActions = [NSMutableArray new];
+    if (a_shouldShowSettingsOption) {
+        [l_alertActions addObject:[UIAlertAction actionWithTitle:@"Cancel"
+                                                           style:UIAlertActionStyleCancel
+                                                         handler:nil]];
+        void (^settingsHandlerBlock)(UIAlertAction *) = ^(UIAlertAction *action) {
+            [IFAUIUtils  openUrl:[NSURL URLWithString:UIApplicationOpenSettingsURLString]
+withAlertPresenterViewController:nil];
+        };
+        [l_alertActions addObject:[UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"Settings", @"IFALocalizable", nil)
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:settingsHandlerBlock]];
+    } else {
+        [l_alertActions addObject:[UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"Continue", @"IFALocalizable", nil)
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:nil]];
+    }
+    void (^l_presentationBlock)(void) = ^{
+        [a_presenterViewController ifa_presentAlertControllerWithTitle:a_title
+                                                               message:message
+                                                                 style:UIAlertControllerStyleAlert
+                                                               actions:l_alertActions
+                                                            completion:nil];
+    };
+    if (a_presenterViewController.presentedViewController) {
+        if ([a_presenterViewController.presentedViewController isKindOfClass:[UIAlertController class]]) {
+            [a_presenterViewController.presentedViewController dismissViewControllerAnimated:NO
+                                                                                  completion:l_presentationBlock];
+        }
+    }else{
+        l_presentationBlock();
+    }
 }
 
 #pragma mark - CLLocationManagerDelegate
