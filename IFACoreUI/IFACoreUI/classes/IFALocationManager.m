@@ -70,13 +70,10 @@
 }
 
 + (BOOL)performLocationServicesChecksWithAlertPresenterViewController:(UIViewController *)a_alertPresenterViewController {
-    if (![CLLocationManager locationServicesEnabled]) {
-        NSString *message = NSLocalizedStringFromTable(@"Location Services are currently disabled.\n\nPlease enable them in the Privacy section of the Settings app.", @"IFALocalizable", nil);
-        [self showLocationServicesAlertWithMessage:message
-                           presenterViewController:a_alertPresenterViewController];
-        return NO;
-    }
-
+    
+    NSString *message;
+    BOOL showSettingsOption = NO;
+    
     CLAuthorizationStatus authorisationStatus = [CLLocationManager authorizationStatus];
     switch (authorisationStatus) {
         case kCLAuthorizationStatusNotDetermined:
@@ -85,23 +82,29 @@
             return YES;
         case kCLAuthorizationStatusRestricted:
         {
-            NSString *message = NSLocalizedStringFromTable(@"Your device is not authorised to use Location Services.", @"IFALocalizable", nil);
-            [self showLocationServicesAlertWithMessage:message
-                               presenterViewController:a_alertPresenterViewController];
-            return NO;
+            message = NSLocalizedStringFromTable(@"Your device is not authorised to use Location Services.", @"IFALocalizable", nil);
+            break;
         }
         case kCLAuthorizationStatusDenied:
         {
-            NSString *message = NSLocalizedStringFromTable(@"Location access is currently disabled for this app.\n\nPlease enable it in the Location section of Settings.\n\nTap the Settings button below to open Settings.", @"IFALocalizable", nil);
-            [self showLocationServicesAlertWithMessage:message showSettingsOption:YES
-                               presenterViewController:a_alertPresenterViewController];
-            return NO;
+            if ([CLLocationManager locationServicesEnabled]) {
+                message = NSLocalizedStringFromTable(@"Location access is currently disabled for this app.\n\nPlease enable it in the Location section of Settings.\n\nTap the Settings button below to open Settings.", @"IFALocalizable", nil);
+                showSettingsOption = YES;
+            } else {
+                message = NSLocalizedStringFromTable(@"Location Services are currently disabled.\n\nPlease enable them in the Privacy section of the Settings app.", @"IFALocalizable", nil);
+            }
+            break;
         }
         default:
             NSAssert(NO, @"Unexpected authorisation status: %u", authorisationStatus);
             return NO;
     }
-
+    
+    [self showLocationServicesAlertWithMessage:message
+                            showSettingsOption:showSettingsOption
+                       presenterViewController:a_alertPresenterViewController];
+    return NO;
+    
 }
 
 + (void)sendLocationAuthorizationStatusChangeNotificationWithStatus:(CLAuthorizationStatus)a_status {
