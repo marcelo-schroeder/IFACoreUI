@@ -312,6 +312,9 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
 
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    self.tableView.estimatedRowHeight = IFAMinimumTapAreaDimension;
+
     if ([self shouldClearSelectionOnViewDidAppear]) {
         self.clearsSelectionOnViewWillAppear = NO;
     }

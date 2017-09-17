@@ -3,3 +3,4 @@
 [CHANGE] IFAMapViewController now uses IFALocationAuthorizationTypeWhenInUse as the default value for the locationAuthorizationType property.
 [FIX] Fixed issues with documentation in IFALocationManager.h.
 [FIX] Fixed bug in the performLocationServicesChecksWithAlertPresenterViewController: method in IFALocationManager that caused the incorrect error message to be displayed in some situations.
+[CHANGE] rowHeight and estimatedRowHeight are now set to UITableViewAutomaticDimension and IFAMinimumTapAreaDimension in IFATableViewController.
