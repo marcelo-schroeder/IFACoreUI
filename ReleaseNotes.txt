@@ -1,3 +1,4 @@
+[CHANGE] Lowest iOS version supported is now 10.
 [NEW] New function added to the UIViewController's extension: ifa_showingNavigationBarBackButton().
 [CHANGE] For iOS 11 and greater: added some smarts to improve layout of left navigation bar buttons when a back button is showing.
 [CHANGE] IFAMapViewController now uses IFALocationAuthorizationTypeWhenInUse as the default value for the locationAuthorizationType property.
