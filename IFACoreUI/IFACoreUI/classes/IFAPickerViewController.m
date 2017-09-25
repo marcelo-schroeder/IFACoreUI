@@ -96,7 +96,9 @@ useButtonForDismissal:(BOOL)a_useButtonForDismissal presenter:(id <IFAPresenter>
         [self setPickerValue:[self.object valueForKey:self.propertyName]];
 
         // Configure view
+        self.IFA_pickerView.translatesAutoresizingMaskIntoConstraints = NO;
         [self.view addSubview:self.IFA_pickerView];
+        [self.IFA_pickerView ifa_addLayoutConstraintsToCenterInSuperview];
         self.view.frame = self.IFA_pickerView.frame;
 
     }

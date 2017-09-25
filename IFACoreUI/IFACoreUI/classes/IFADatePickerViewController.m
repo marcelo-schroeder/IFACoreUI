@@ -256,6 +256,8 @@
                                                                                      views:l_views];
     [self.view addConstraints:l_verticalLayoutConstraints];
 
+    [self.IFA_pickerContainerView ifa_addLayoutConstraintToCenterInSuperviewHorizontally];
+
     CGRect l_viewFrame = CGRectZero;
     l_viewFrame.size = [self.view systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
     self.view.frame = l_viewFrame;
