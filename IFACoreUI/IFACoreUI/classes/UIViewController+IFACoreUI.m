@@ -44,6 +44,7 @@ static char c_modalDismissalDoneBarButtonItemKey;
 static char c_toolbarUpdatedBeforeViewAppearedKey;
 static char c_previousVisibleViewControllerKey;
 static char c_sessionCompletionNotifiedKey;
+static char c_toolbar;
 
 //static UIViewController *c_popoverControllerPresenter;
 
@@ -59,6 +60,7 @@ static char c_sessionCompletionNotifiedKey;
 @property (nonatomic) BOOL ifa_hasViewAppeared;
 @property (nonatomic) BOOL IFA_toolbarUpdatedBeforeViewAppeared;
 @property (nonatomic) BOOL ifa_sessionCompletionNotified;
+@property (nonatomic, strong) UIToolbar *ifa_toolbar;
 
 @end
 
@@ -342,6 +344,62 @@ typedef NS_ENUM(NSUInteger, IFANavigationBarButtonItemsSide) {
 #endif
 }
 
+- (void)IFA_setToolbarHidden:(BOOL)a_toolbarHidden animated:(BOOL)a_animated {
+    if (@available(iOS 11, *)) {
+        if (a_toolbarHidden) {
+            if (self.ifa_toolbar.hidden) {
+                return;
+            }
+        } else {
+            if (!self.ifa_toolbar.hidden) {
+                return;
+            }
+        }
+        CGFloat toolbarHeight = self.navigationController.toolbar.bounds.size.height;
+        CGFloat tabbarHeight = self.tabBarController.tabBar.bounds.size.height;
+        CGFloat additionalSafeAreaBottomInset = toolbarHeight + tabbarHeight;
+        if (a_toolbarHidden) {
+            additionalSafeAreaBottomInset = additionalSafeAreaBottomInset * (-1);
+        }
+        self.additionalSafeAreaInsets = UIEdgeInsetsMake(self.additionalSafeAreaInsets.top, self.additionalSafeAreaInsets.left, self.additionalSafeAreaInsets.bottom + additionalSafeAreaBottomInset, self.additionalSafeAreaInsets.right);
+        if (a_toolbarHidden) {
+            [self.ifa_toolbar.superview.constraints enumerateObjectsUsingBlock:^(__kindof NSLayoutConstraint * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                if (obj.firstItem == self.ifa_toolbar && obj.firstAttribute == NSLayoutAttributeTop) {
+                    if (a_animated) {
+                        obj.constant = toolbarHeight;
+                        [UIView animateWithDuration:IFAAnimationDuration animations:^{
+                            [self.ifa_toolbar.superview layoutIfNeeded];
+                        } completion:^(BOOL finished) {
+                            [self.ifa_toolbar removeFromSuperview];
+                            self.ifa_toolbar.hidden = YES;
+                        }];
+                    } else {
+                        [self.ifa_toolbar removeFromSuperview];
+                        self.ifa_toolbar.hidden = YES;
+                    }
+                    *stop = YES;
+                }
+            }];
+        } else {
+            self.ifa_toolbar.hidden = NO;
+            [self.view addSubview:self.ifa_toolbar];
+            [self.ifa_toolbar.leftAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leftAnchor].active = YES;
+            [self.ifa_toolbar.rightAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.rightAnchor].active = YES;
+            NSLayoutConstraint *toolbarTopConstraint = [NSLayoutConstraint constraintWithItem:self.ifa_toolbar attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view.safeAreaLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1 constant:a_animated ? toolbarHeight : 0];
+            toolbarTopConstraint.active = YES;
+            if (a_animated) {
+                [self.ifa_toolbar.superview layoutIfNeeded];
+                toolbarTopConstraint.constant = 0;
+                [UIView animateWithDuration:IFAAnimationDuration animations:^{
+                    [self.ifa_toolbar.superview layoutIfNeeded];
+                }];
+            }
+        }
+    } else {
+        [self.navigationController setToolbarHidden:a_toolbarHidden animated:a_animated];
+    }
+}
+
 #pragma mark - Public
 
 -(void)setIfa_presenter:(id<IFAPresenter>)a_presenter{
@@ -507,6 +565,21 @@ typedef NS_ENUM(NSUInteger, IFANavigationBarButtonItemsSide) {
 
 -(void)setIFA_slidingMenuBarButtonItem:(UIBarButtonItem*)a_slidingMenuBarButtonItem{
     objc_setAssociatedObject(self, &c_slidingMenuBarButtonItemKey, a_slidingMenuBarButtonItem, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+-(UIToolbar*)ifa_toolbar {
+    UIToolbar *toolbar = objc_getAssociatedObject(self, &c_toolbar);
+    if (!toolbar) {
+        toolbar = [UIToolbar new];
+        toolbar.hidden = YES;
+        toolbar.translatesAutoresizingMaskIntoConstraints = NO;
+        [self setIfa_toolbar:toolbar];
+    }
+    return toolbar;
+}
+
+-(void)setIfa_toolbar:(UIToolbar*)a_toolbar{
+    objc_setAssociatedObject(self, &c_toolbar, a_toolbar, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 -(UIBarButtonItem*)IFA_modalDismissalDoneBarButtonItem {
@@ -697,33 +770,45 @@ typedef NS_ENUM(NSUInteger, IFANavigationBarButtonItemsSide) {
 }
 
 - (void)ifa_updateToolbarForEditing:(BOOL)a_editing animated:(BOOL)a_animated {
-//    NSLog(@" ");
-//    NSLog(@"toolbar items before: %@", [self.toolbarItems description]);
+
     if(self.ifa_manageToolbar || a_editing){
+        
         NSMutableArray *toolbarItems = [a_editing ? [self ifa_editModeToolbarItems] : [self ifa_nonEditModeToolbarItems] mutableCopy];
         [self IFA_addSpacingToBarButtonItems:toolbarItems side:IFANavigationBarButtonItemsSideNotApplicable
                                      barType:IFABarButtonItemSpacingBarTypeToolbar];
-//        NSLog(@"self.navigationController.toolbar: %@", [self.navigationController.toolbar description]);
-//        NSLog(@" self.navigationController.toolbarHidden: %u, animated: %u", self.navigationController.toolbarHidden, anAnimatedFlag);
-        BOOL l_shouldHideToolbar = ![toolbarItems count];
-        [self.navigationController setToolbarHidden:l_shouldHideToolbar animated:a_animated];
-//        NSLog(@" self.navigationController.toolbarHidden: %u", self.navigationController.toolbarHidden);
+        BOOL shouldHideToolbar = ![toolbarItems count];
+        [self IFA_setToolbarHidden:shouldHideToolbar animated:a_animated];
         if ([toolbarItems count]) {
             if (self.ifa_manageToolbar) {
-                if (![self.toolbarItems isEqualToArray:toolbarItems]) {
-                    [self setToolbarItems:toolbarItems animated:a_animated];
+                if (@available(iOS 11, *)) {
+                    if (![self.ifa_toolbar.items isEqualToArray:toolbarItems]) {
+                        [self.ifa_toolbar setItems:toolbarItems animated:a_animated];
+                    }
+                } else {
+                    if (![self.toolbarItems isEqualToArray:toolbarItems]) {
+                        [self setToolbarItems:toolbarItems animated:a_animated];
+                    }
                 }
-            }else{
-                if (![self.parentViewController.toolbarItems isEqualToArray:toolbarItems]) {
-                    [self.parentViewController setToolbarItems:toolbarItems animated:a_animated];
-                }
+           }else{
+               if (@available(iOS 11, *)) {
+                   if (![self.parentViewController.ifa_toolbar.items isEqualToArray:toolbarItems]) {
+                       [self.parentViewController.ifa_toolbar setItems:toolbarItems animated:a_animated];
+                   }
+               } else {
+                   if (![self.parentViewController.toolbarItems isEqualToArray:toolbarItems]) {
+                       [self.parentViewController setToolbarItems:toolbarItems animated:a_animated];
+                   }
+               }
             }
         }
+        
     }else{
-        BOOL l_shouldHideToolbar = ![self.toolbarItems count];
-        [self.navigationController setToolbarHidden:l_shouldHideToolbar animated:a_animated];
+
+        BOOL shouldHideToolbar = ![self.toolbarItems count];
+        [self IFA_setToolbarHidden:shouldHideToolbar animated:a_animated];
+    
     }
-//    NSLog(@"toolbar items after: %@", [self.toolbarItems description]);
+
 }
 
 -(BOOL)ifa_hasFixedSize {
