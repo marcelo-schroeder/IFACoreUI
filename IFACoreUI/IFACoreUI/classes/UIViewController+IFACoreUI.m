@@ -383,9 +383,9 @@ typedef NS_ENUM(NSUInteger, IFANavigationBarButtonItemsSide) {
         } else {
             self.ifa_toolbar.hidden = NO;
             [self.view addSubview:self.ifa_toolbar];
-            [self.ifa_toolbar.leftAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leftAnchor].active = YES;
-            [self.ifa_toolbar.rightAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.rightAnchor].active = YES;
-            NSLayoutConstraint *toolbarTopConstraint = [NSLayoutConstraint constraintWithItem:self.ifa_toolbar attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view.safeAreaLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1 constant:a_animated ? toolbarHeight : 0];
+            [self.ifa_toolbar.leftAnchor constraintEqualToAnchor:self.ifa_toolbar.superview.safeAreaLayoutGuide.leftAnchor].active = YES;
+            [self.ifa_toolbar.rightAnchor constraintEqualToAnchor:self.ifa_toolbar.superview.safeAreaLayoutGuide.rightAnchor].active = YES;
+            NSLayoutConstraint *toolbarTopConstraint = [NSLayoutConstraint constraintWithItem:self.ifa_toolbar attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.ifa_toolbar.superview.safeAreaLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1 constant:a_animated ? toolbarHeight : 0];
             toolbarTopConstraint.active = YES;
             if (a_animated) {
                 [self.ifa_toolbar.superview layoutIfNeeded];

@@ -49,6 +49,7 @@
 @property (nonatomic, strong) IFA_ODRefreshControl *ifa_refreshControl;
 @property (nonatomic, readonly) BOOL ifa_hasViewAppeared;
 @property (nonatomic, strong) UIBarButtonItem *IFA_modalDismissalDoneBarButtonItem;
+@property (nonatomic, strong, readonly) UIToolbar *ifa_toolbar;
 
 /**
 * Indicates whether the session completion has been notified or not.
