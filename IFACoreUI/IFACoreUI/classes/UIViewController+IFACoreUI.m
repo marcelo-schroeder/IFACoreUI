@@ -355,7 +355,8 @@ typedef NS_ENUM(NSUInteger, IFANavigationBarButtonItemsSide) {
                 return;
             }
         }
-        CGFloat toolbarHeight = self.navigationController.toolbar.bounds.size.height;
+        [[self ifa_toolbar] layoutIfNeeded];
+        CGFloat toolbarHeight = self.ifa_toolbar.bounds.size.height;
         CGFloat tabbarHeight = self.tabBarController.tabBar.bounds.size.height;
         CGFloat additionalSafeAreaBottomInset = toolbarHeight + tabbarHeight;
         if (a_toolbarHidden) {
@@ -573,6 +574,7 @@ typedef NS_ENUM(NSUInteger, IFANavigationBarButtonItemsSide) {
         toolbar = [UIToolbar new];
         toolbar.hidden = YES;
         toolbar.translatesAutoresizingMaskIntoConstraints = NO;
+        [NSLayoutConstraint constraintWithItem:toolbar attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:IFAMinimumTapAreaDimension].active = YES;
         [self setIfa_toolbar:toolbar];
     }
     return toolbar;
@@ -777,7 +779,6 @@ typedef NS_ENUM(NSUInteger, IFANavigationBarButtonItemsSide) {
         [self IFA_addSpacingToBarButtonItems:toolbarItems side:IFANavigationBarButtonItemsSideNotApplicable
                                      barType:IFABarButtonItemSpacingBarTypeToolbar];
         BOOL shouldHideToolbar = ![toolbarItems count];
-        [self IFA_setToolbarHidden:shouldHideToolbar animated:a_animated];
         if ([toolbarItems count]) {
             if (self.ifa_manageToolbar) {
                 if (@available(iOS 11, *)) {
@@ -789,18 +790,19 @@ typedef NS_ENUM(NSUInteger, IFANavigationBarButtonItemsSide) {
                         [self setToolbarItems:toolbarItems animated:a_animated];
                     }
                 }
-           }else{
-               if (@available(iOS 11, *)) {
-                   if (![self.parentViewController.ifa_toolbar.items isEqualToArray:toolbarItems]) {
-                       [self.parentViewController.ifa_toolbar setItems:toolbarItems animated:a_animated];
-                   }
-               } else {
-                   if (![self.parentViewController.toolbarItems isEqualToArray:toolbarItems]) {
-                       [self.parentViewController setToolbarItems:toolbarItems animated:a_animated];
-                   }
-               }
+            }else{
+                if (@available(iOS 11, *)) {
+                    if (![self.parentViewController.ifa_toolbar.items isEqualToArray:toolbarItems]) {
+                        [self.parentViewController.ifa_toolbar setItems:toolbarItems animated:a_animated];
+                    }
+                } else {
+                    if (![self.parentViewController.toolbarItems isEqualToArray:toolbarItems]) {
+                        [self.parentViewController setToolbarItems:toolbarItems animated:a_animated];
+                    }
+                }
             }
         }
+        [self IFA_setToolbarHidden:shouldHideToolbar animated:a_animated];
         
     }else{
 
