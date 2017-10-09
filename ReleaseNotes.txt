@@ -6,3 +6,4 @@
 [FIX] Fixed bug in the performLocationServicesChecksWithAlertPresenterViewController: method in IFALocationManager that caused the incorrect error message to be displayed in some situations.
 [CHANGE] rowHeight and estimatedRowHeight are now set to UITableViewAutomaticDimension and IFAMinimumTapAreaDimension in IFATableViewController.
 [FIX] Fixed layout issues introduced with iOS 11 in IFAPickerViewController and IFADatePickerViewController.
+[FIX] Fixed issues with toolbar management introduced with iOS 11.
