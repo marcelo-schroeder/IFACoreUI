@@ -110,11 +110,15 @@ typedef NS_ENUM(NSUInteger, IFANavigationBarButtonItemsSide) {
 //    NSLog(@"  l_viewController: %@", [l_viewController description]);
 
     if ([a_viewController ifa_hasFixedSize]) {
-        CGFloat l_width = a_viewController.view.frame.size.width;
-        CGFloat l_height = a_viewController.view.frame.size.height + a_viewController.navigationController.navigationBar.frame.size.height + (a_viewController.ifa_needsToolbar ? a_viewController.navigationController.toolbar.frame.size.height : 0);
-        l_viewController.view.frame = CGRectMake(0, 0, l_width, l_height);
-//        NSLog(@"  l_viewController.view.frame: %@", NSStringFromCGRect(l_viewController.view.frame));
-//        NSLog(@"  a_viewController.view.frame: %@", NSStringFromCGRect(a_viewController.view.frame));
+        CGFloat calculatedContentViewHeight = [a_viewController.view systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+        CGFloat navigationControllerViewWidth = a_viewController.view.frame.size.width;
+        CGFloat navigationControllerViewHeight;
+        if (@available(iOS 11.0, *)) {
+            navigationControllerViewHeight = calculatedContentViewHeight + a_viewController.navigationController.navigationBar.frame.size.height;
+        } else {
+            navigationControllerViewHeight = calculatedContentViewHeight + a_viewController.navigationController.navigationBar.frame.size.height + (a_viewController.ifa_needsToolbar ? a_viewController.navigationController.toolbar.frame.size.height : 0);
+        }
+        l_viewController.view.frame = CGRectMake(0, 0, navigationControllerViewWidth, navigationControllerViewHeight);
     }
 
 //    if ([IFAUIUtils isIPad]) { // If iPad present controller in a popover
@@ -355,7 +359,6 @@ typedef NS_ENUM(NSUInteger, IFANavigationBarButtonItemsSide) {
                 return;
             }
         }
-        [[self ifa_toolbar] layoutIfNeeded];
         CGFloat toolbarHeight = self.ifa_toolbar.bounds.size.height;
         CGFloat tabbarHeight = self.tabBarController.tabBar.bounds.size.height;
         CGFloat additionalSafeAreaBottomInset = toolbarHeight + tabbarHeight;
@@ -575,6 +578,11 @@ typedef NS_ENUM(NSUInteger, IFANavigationBarButtonItemsSide) {
         toolbar.hidden = YES;
         toolbar.translatesAutoresizingMaskIntoConstraints = NO;
         [NSLayoutConstraint constraintWithItem:toolbar attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:IFAMinimumTapAreaDimension].active = YES;
+
+        // Allows for initial sizing to aid with layout calculations somewhere else
+        toolbar.items = @[];
+        [toolbar layoutIfNeeded];
+
         [self setIfa_toolbar:toolbar];
     }
     return toolbar;
