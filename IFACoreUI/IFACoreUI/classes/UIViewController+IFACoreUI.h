@@ -129,6 +129,12 @@
                                                animationOptions:(UIViewAnimationOptions)a_animationOptions
                                                      completion:(void (^)(BOOL a_finished))a_completion;
 
+/**
+ * Recursively determines the top level parent view controller starting with the target.
+ * @returns Top level parent view controller.
+ */
+- (UIViewController *)ifa_topLevelParentViewController;
+
 + (instancetype)ifa_instantiateFromStoryboardInBundle:(NSBundle *)bundle;
 
 + (id)ifa_instantiateFromStoryboardWithViewControllerIdentifier:(NSString *)viewControllerIdentifier

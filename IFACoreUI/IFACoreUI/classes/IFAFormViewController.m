@@ -638,10 +638,6 @@ static NSString *const k_sectionHeaderFooterReuseId = @"sectionHeaderFooter";
     }
 }
 
-- (BOOL)IFA_shouldAdjustContentInsetForPresentedViewController:(UIViewController *)a_viewController {
-    return a_viewController.ifa_hasFixedSize;
-}
-
 - (UIView *)IFA_sectionHeaderFooterWithLabelText:(NSString *)a_labelText
                                         isHeader:(BOOL)a_isHeader
                                          section:(NSUInteger)a_section {
@@ -1561,20 +1557,6 @@ withAlertPresenterViewController:nil];
 //            self.IFA_indexPathForPopoverController = indexPath;
 //            CGRect l_fromPopoverRect = [self IFA_fromPopoverRectForIndexPath:self.IFA_indexPathForPopoverController];
 
-            if ([self IFA_shouldAdjustContentInsetForPresentedViewController:l_viewController]) {
-                self.contentInsetBeforePresentingSemiModalViewController = tableView.contentInset;
-                CGFloat navigationBarHeight = self.navigationController.navigationBar.bounds.size.height;   // Not the actual navigation bar that will be used. Just a reference for height.
-                CGFloat toolbarHeight = l_viewController.ifa_editModeToolbarItems.count ? navigationBarHeight : 0;   // Assuming the toolbar height is the same as the navigation bar.
-                CGFloat contentBottomInset = l_viewController.view.bounds.size.height + navigationBarHeight + toolbarHeight;
-                [UIView animateWithDuration:IFAAnimationDuration animations:^{
-                    tableView.contentInset = UIEdgeInsetsMake(0, 0, contentBottomInset, 0);
-                }];
-                [tableView scrollToRowAtIndexPath:indexPath
-                                 atScrollPosition:UITableViewScrollPositionBottom
-                                         animated:YES];
-                [tableView deselectRowAtIndexPath:indexPath animated:YES];
-            }
-
             if ([self.formViewControllerDelegate respondsToSelector:@selector(formViewController:willPresentFieldEditorViewController:forIndexPath:propertyName:)]) {
                 l_viewController = [self.formViewControllerDelegate formViewController:self
                                                   willPresentFieldEditorViewController:l_viewController
@@ -1585,6 +1567,11 @@ withAlertPresenterViewController:nil];
                                                    inView:self.tableView];
 //            [self ifa_presentModalSelectionViewController:l_viewController fromRect:l_fromPopoverRect
 //                                                   inView:self.tableView];
+
+            [self.tableView scrollToRowAtIndexPath:indexPath
+                                  atScrollPosition:UITableViewScrollPositionBottom
+                                          animated:YES];
+            [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 
         }
 
@@ -1663,14 +1650,6 @@ withAlertPresenterViewController:nil];
     [super sessionDidCompleteForViewController:a_viewController changesMade:a_changesMade data:a_data
                         shouldAnimateDismissal:a_shouldAnimateDismissal];
     [self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:YES];
-    if ([self IFA_shouldAdjustContentInsetForPresentedViewController:a_viewController]) {
-        __weak __typeof(self) l_weakSelf = self;
-        [UIView animateWithDuration:IFAAnimationDuration animations:^{
-            l_weakSelf.tableView.contentInset = l_weakSelf.contentInsetBeforePresentingSemiModalViewController;
-        } completion:^(BOOL finished) {
-            l_weakSelf.contentInsetBeforePresentingSemiModalViewController = UIEdgeInsetsZero;
-        }];
-    }
 }
 
 #pragma mark -

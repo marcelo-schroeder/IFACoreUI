@@ -44,7 +44,8 @@ static char c_modalDismissalDoneBarButtonItemKey;
 static char c_toolbarUpdatedBeforeViewAppearedKey;
 static char c_previousVisibleViewControllerKey;
 static char c_sessionCompletionNotifiedKey;
-static char c_toolbar;
+static char c_toolbarKey;
+static char c_safeAreaBottomInsetForPresentedViewControllerKey;
 
 //static UIViewController *c_popoverControllerPresenter;
 
@@ -61,6 +62,7 @@ static char c_toolbar;
 @property (nonatomic) BOOL IFA_toolbarUpdatedBeforeViewAppeared;
 @property (nonatomic) BOOL ifa_sessionCompletionNotified;
 @property (nonatomic, strong) UIToolbar *ifa_toolbar;
+@property (nonatomic) CGFloat ifa_safeAreaBottomInsetForPresentedViewController;
 
 @end
 
@@ -110,15 +112,8 @@ typedef NS_ENUM(NSUInteger, IFANavigationBarButtonItemsSide) {
 //    NSLog(@"  l_viewController: %@", [l_viewController description]);
 
     if ([a_viewController ifa_hasFixedSize]) {
-        CGFloat calculatedContentViewHeight = [a_viewController.view systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-        CGFloat navigationControllerViewWidth = a_viewController.view.frame.size.width;
-        CGFloat navigationControllerViewHeight;
-        if (@available(iOS 11.0, *)) {
-            navigationControllerViewHeight = calculatedContentViewHeight + a_viewController.navigationController.navigationBar.frame.size.height;
-        } else {
-            navigationControllerViewHeight = calculatedContentViewHeight + a_viewController.navigationController.navigationBar.frame.size.height + (a_viewController.ifa_needsToolbar ? a_viewController.navigationController.toolbar.frame.size.height : 0);
-        }
-        l_viewController.view.frame = CGRectMake(0, 0, navigationControllerViewWidth, navigationControllerViewHeight);
+        CGSize viewControllerViewSize = [self IFA_calculateSizeForModalSelectionViewController:a_viewController];
+        l_viewController.view.frame = CGRectMake(0, 0, viewControllerViewSize.width, viewControllerViewSize.height);
     }
 
 //    if ([IFAUIUtils isIPad]) { // If iPad present controller in a popover
@@ -153,7 +148,20 @@ typedef NS_ENUM(NSUInteger, IFANavigationBarButtonItemsSide) {
             if ([a_viewController conformsToProtocol:@protocol(IFASemiModalViewDelegate)]) {
                 self.semiModalViewDelegate = (id <IFASemiModalViewDelegate>) a_viewController;
             }else{
-                self.semiModalViewDelegate = nil;
+                self.semiModalViewDelegate = nil;   
+            }
+            if ([self isKindOfClass:[IFAFormViewController class]]) {
+                self.ifa_safeAreaBottomInsetForPresentedViewController = l_viewController.view.bounds.size.height;
+                CGFloat offset;   // Ignores tabbar or anything else that could be at the bottom of parent view controllers. Logic varies depending on iOS version. :-(
+                if (@available(iOS 11, *)) {
+                    CGFloat tabBarHeight = self.tabBarController.tabBar.bounds.size.height;
+                    CGFloat topLevelSafeAreaBottomInset = [self ifa_topLevelParentViewController].view.safeAreaInsets.bottom;
+                    offset = [UIScreen mainScreen].bounds.size.height - self.view.bounds.size.height - tabBarHeight - topLevelSafeAreaBottomInset;
+                } else {
+                    offset = [UIScreen mainScreen].bounds.size.height - self.view.bounds.size.height;
+                }
+                self.ifa_safeAreaBottomInsetForPresentedViewController -= offset;
+                [self IFA_incrementSafeAreaBottomInsetBy:self.ifa_safeAreaBottomInsetForPresentedViewController];
             }
             [self presentSemiModalViewController:l_viewController];
         } else {
@@ -167,6 +175,19 @@ typedef NS_ENUM(NSUInteger, IFANavigationBarButtonItemsSide) {
 
 //    }
 
+}
+
+- (void)IFA_incrementSafeAreaBottomInsetBy:(CGFloat)increment {
+    if (@available(iOS 11, *)) {
+        UIEdgeInsets newAdditionalSafeAreaInsets = self.additionalSafeAreaInsets;
+        newAdditionalSafeAreaInsets.bottom += increment;
+        self.additionalSafeAreaInsets = newAdditionalSafeAreaInsets;
+    } else {
+        IFAFormViewController *formViewController = (IFAFormViewController *)self;
+        UIEdgeInsets newContentInset = formViewController.tableView.contentInset;
+        newContentInset.bottom += increment;
+        formViewController.tableView.contentInset = newContentInset;
+    }
 }
 
 - (BOOL)IFA_shouldWrapWithNavigationControllerForViewController:(UIViewController *)a_viewController {
@@ -404,6 +425,18 @@ typedef NS_ENUM(NSUInteger, IFANavigationBarButtonItemsSide) {
     }
 }
 
+- (CGSize)IFA_calculateSizeForModalSelectionViewController:(UIViewController *)a_viewController {
+    CGFloat calculatedContentViewHeight = [a_viewController.view systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+    CGFloat navigationControllerViewWidth = a_viewController.view.frame.size.width;
+    CGFloat navigationControllerViewHeight;
+    if (@available(iOS 11.0, *)) {
+        navigationControllerViewHeight = calculatedContentViewHeight + a_viewController.navigationController.navigationBar.frame.size.height;
+    } else {
+        navigationControllerViewHeight = calculatedContentViewHeight + a_viewController.navigationController.navigationBar.frame.size.height + (a_viewController.ifa_needsToolbar ? a_viewController.navigationController.toolbar.frame.size.height : 0);
+    }
+    return CGSizeMake(navigationControllerViewWidth, navigationControllerViewHeight);
+}
+
 #pragma mark - Public
 
 -(void)setIfa_presenter:(id<IFAPresenter>)a_presenter{
@@ -523,6 +556,14 @@ typedef NS_ENUM(NSUInteger, IFANavigationBarButtonItemsSide) {
     objc_setAssociatedObject(self, &c_changesMadeByPresentedViewControllerKey, @(a_changesMadeByPresentedViewController), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
+-(CGFloat)ifa_safeAreaBottomInsetForPresentedViewController {
+    return ((NSNumber*)objc_getAssociatedObject(self, &c_safeAreaBottomInsetForPresentedViewControllerKey)).floatValue;
+}
+
+-(void)setIfa_safeAreaBottomInsetForPresentedViewController:(CGFloat)a_safeAreaBottomInsetForPresentedViewController{
+    objc_setAssociatedObject(self, &c_safeAreaBottomInsetForPresentedViewControllerKey, @(a_safeAreaBottomInsetForPresentedViewController), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
 -(BOOL)ifa_hasViewAppeared {
     return ((NSNumber*)objc_getAssociatedObject(self, &c_hasViewAppearedKey)).boolValue;
 }
@@ -572,7 +613,7 @@ typedef NS_ENUM(NSUInteger, IFANavigationBarButtonItemsSide) {
 }
 
 -(UIToolbar*)ifa_toolbar {
-    UIToolbar *toolbar = objc_getAssociatedObject(self, &c_toolbar);
+    UIToolbar *toolbar = objc_getAssociatedObject(self, &c_toolbarKey);
     if (!toolbar) {
         toolbar = [UIToolbar new];
         toolbar.hidden = YES;
@@ -589,7 +630,7 @@ typedef NS_ENUM(NSUInteger, IFANavigationBarButtonItemsSide) {
 }
 
 -(void)setIfa_toolbar:(UIToolbar*)a_toolbar{
-    objc_setAssociatedObject(self, &c_toolbar, a_toolbar, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, &c_toolbarKey, a_toolbar, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 -(UIBarButtonItem*)IFA_modalDismissalDoneBarButtonItem {
@@ -1706,6 +1747,14 @@ withAlertPresenterViewController:nil];
                                    completion:nil];
 }
 
+- (UIViewController *)ifa_topLevelParentViewController {
+    UIViewController *viewController = self;
+    while (viewController.parentViewController) {
+        viewController = viewController.parentViewController;
+    }
+    return viewController;
+}
+
 //+ (UIViewController *)ifa_popoverControllerPresenter {
 //    return c_popoverControllerPresenter;
 //}
@@ -1730,6 +1779,21 @@ withAlertPresenterViewController:nil];
 - (void)sessionDidCompleteForViewController:(UIViewController *)a_viewController changesMade:(BOOL)a_changesMade
                                        data:(id)a_data shouldAnimateDismissal:(BOOL)a_shouldAnimateDismissal {
     self.ifa_changesMadeByPresentedViewController = a_changesMade;
+    if (self.ifa_safeAreaBottomInsetForPresentedViewController) {
+        [UIView animateWithDuration:IFAAnimationDuration animations:^{
+            [self IFA_incrementSafeAreaBottomInsetBy:(-self.ifa_safeAreaBottomInsetForPresentedViewController)];
+//            if (@available(iOS 11, *)) {
+//                UIEdgeInsets newAdditionalSafeAreaInsets = self.additionalSafeAreaInsets;
+//                newAdditionalSafeAreaInsets.bottom = newAdditionalSafeAreaInsets.bottom - self.ifa_safeAreaBottomInsetForPresentedViewController;
+//                self.additionalSafeAreaInsets = newAdditionalSafeAreaInsets;
+//            } else {
+//                //                    l_weakSelf.tableView.contentInset = l_weakSelf.contentInsetBeforePresentingSemiModalViewController;
+//            }
+        } completion:^(BOOL finished) {
+            //                l_weakSelf.contentInsetBeforePresentingSemiModalViewController = UIEdgeInsetsZero;
+            self.ifa_safeAreaBottomInsetForPresentedViewController = 0;
+        }];
+    }
     if (a_viewController.ifa_presentedAsModal) {
         [self ifa_dismissModalViewControllerWithChangesMade:a_changesMade data:a_data animated:a_shouldAnimateDismissal];
     }else{
