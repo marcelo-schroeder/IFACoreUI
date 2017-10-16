@@ -49,6 +49,7 @@
 @property (nonatomic, strong) IFA_ODRefreshControl *ifa_refreshControl;
 @property (nonatomic, readonly) BOOL ifa_hasViewAppeared;
 @property (nonatomic, strong) UIBarButtonItem *IFA_modalDismissalDoneBarButtonItem;
+@property (nonatomic, strong, readonly) UIToolbar *ifa_toolbar;
 
 /**
 * Indicates whether the session completion has been notified or not.
@@ -127,6 +128,12 @@
 - (void)ifa_removeFromParentViewControllerWithAnimationDuration:(NSTimeInterval)a_animationDuration
                                                animationOptions:(UIViewAnimationOptions)a_animationOptions
                                                      completion:(void (^)(BOOL a_finished))a_completion;
+
+/**
+ * Recursively determines the top level parent view controller starting with the target.
+ * @returns Top level parent view controller.
+ */
+- (UIViewController *)ifa_topLevelParentViewController;
 
 + (instancetype)ifa_instantiateFromStoryboardInBundle:(NSBundle *)bundle;
 

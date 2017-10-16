@@ -98,8 +98,16 @@ useButtonForDismissal:(BOOL)a_useButtonForDismissal presenter:(id <IFAPresenter>
         // Configure view
         self.IFA_pickerView.translatesAutoresizingMaskIntoConstraints = NO;
         [self.view addSubview:self.IFA_pickerView];
-        [self.IFA_pickerView ifa_addLayoutConstraintsToCenterInSuperview];
-        self.view.frame = self.IFA_pickerView.frame;
+
+        NSDictionary *views = @{@"pickerView" : self.IFA_pickerView};
+        // >= at the bottom allows layout to flow outside safe area
+        NSArray *verticalLayoutConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[pickerView]-(>=0)-|"
+                                                                                     options:0
+                                                                                     metrics:nil
+                                                                                       views:views];
+        [self.view addConstraints:verticalLayoutConstraints];
+
+        [self.IFA_pickerView ifa_addLayoutConstraintToCenterInSuperviewHorizontally];
 
     }
     
