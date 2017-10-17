@@ -152,14 +152,17 @@ typedef NS_ENUM(NSUInteger, IFANavigationBarButtonItemsSide) {
             }
             if ([self isKindOfClass:[IFAFormViewController class]]) {
                 self.ifa_safeAreaBottomInsetForPresentedViewController = l_viewController.view.bounds.size.height;
+                UIViewController *topLevelParentViewController = [self ifa_topLevelParentViewController];
                 CGFloat offset;   // Ignores tabbar or anything else that could be at the bottom of parent view controllers. Logic varies depending on iOS version. :-(
                 if (@available(iOS 11, *)) {
                     CGFloat tabBarHeight = self.tabBarController.tabBar.bounds.size.height;
-                    CGFloat topLevelSafeAreaBottomInset = [self ifa_topLevelParentViewController].view.safeAreaInsets.bottom;
+                    CGFloat topLevelSafeAreaBottomInset = topLevelParentViewController.view.safeAreaInsets.bottom;
                     offset = [UIScreen mainScreen].bounds.size.height - self.view.bounds.size.height - tabBarHeight - topLevelSafeAreaBottomInset;
                 } else {
                     offset = [UIScreen mainScreen].bounds.size.height - self.view.bounds.size.height;
                 }
+                CGFloat statusBarHeightExtension = topLevelParentViewController.view.frame.origin.y;    // Takes the status bar in-call state into consideration
+                offset -= statusBarHeightExtension;
                 self.ifa_safeAreaBottomInsetForPresentedViewController -= offset;
                 [self IFA_incrementSafeAreaBottomInsetBy:self.ifa_safeAreaBottomInsetForPresentedViewController];
             }
