@@ -8,3 +8,4 @@
 [FIX] Fixed layout issues introduced with iOS 11 in IFAPickerViewController and IFADatePickerViewController.
 [FIX] Fixed issues with toolbar management introduced with iOS 11.
 [NEW] New method in UIViewController+IFACoreUI: ifa_topLevelParentViewController.
+[FIX] Fixed iPhone X issue in the ifa_isCellFullyVisibleForRowAtIndexPath: method in UITableView+IFACoreUI.
