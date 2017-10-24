@@ -384,7 +384,7 @@ typedef NS_ENUM(NSUInteger, IFANavigationBarButtonItemsSide) {
             }
         }
         CGFloat toolbarHeight = self.ifa_toolbar.bounds.size.height;
-        CGFloat tabbarHeight = self.tabBarController.tabBar.bounds.size.height;
+        CGFloat tabbarHeight = [IFAUtils isRunningInSimulator] ? 0 : self.tabBarController.tabBar.bounds.size.height;  // C'mon Apple, WTF is this?
         CGFloat additionalSafeAreaBottomInset = toolbarHeight + tabbarHeight;
         if (a_toolbarHidden) {
             additionalSafeAreaBottomInset = additionalSafeAreaBottomInset * (-1);
