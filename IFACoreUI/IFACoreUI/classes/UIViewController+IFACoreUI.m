@@ -1323,6 +1323,18 @@ typedef NS_ENUM(NSUInteger, IFANavigationBarButtonItemsSide) {
     
 }
 
+- (void)ifa_viewWillLayoutSubviews {
+    // Nothing yet
+}
+
+- (void)ifa_viewDidLayoutSubviews {
+    if (@available(iOS 11.0, *)) {
+        if (self.ifa_needsToolbar) {
+            [self.ifa_toolbar.superview bringSubviewToFront:self.ifa_toolbar];
+        }
+    }
+}
+
 -(BOOL)ifa_isReturningVisibleViewController {
 //    NSLog(@"m_isReturningTopViewController: %@, previousVisibleViewController: %@", self, self.previousVisibleViewController);
     if ([self.parentViewController conformsToProtocol:@protocol(IFAPagingContainer)]) {

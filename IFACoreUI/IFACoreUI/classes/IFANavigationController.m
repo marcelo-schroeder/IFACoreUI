@@ -68,6 +68,16 @@
 
 }
 
+-(void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    [self ifa_viewWillLayoutSubviews];
+}
+
+-(void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    [self ifa_viewDidLayoutSubviews];
+}
+
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     [super prepareForSegue:segue sender:sender];
     [self ifa_prepareForSegue:segue sender:sender];

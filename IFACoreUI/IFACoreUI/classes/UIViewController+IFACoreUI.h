@@ -338,6 +338,8 @@
 - (void)ifa_viewDidDisappear;
 - (void)ifa_viewDidLoad;
 - (void)ifa_viewDidUnload;
+- (void)ifa_viewWillLayoutSubviews;
+- (void)ifa_viewDidLayoutSubviews;
 - (UIStatusBarStyle)ifa_preferredStatusBarStyle;
 - (BOOL)ifa_prefersStatusBarHidden;
 - (void)ifa_onApplicationWillEnterForegroundNotification:(NSNotification*)aNotification;

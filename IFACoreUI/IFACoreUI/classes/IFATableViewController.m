@@ -267,6 +267,16 @@
     
 }
 
+-(void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    [self ifa_viewWillLayoutSubviews];
+}
+
+-(void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    [self ifa_viewDidLayoutSubviews];
+}
+
 -(UITableView *)tableView{
     if (self.shouldCreateContainerViewOnLoadView) {
         if (!self.view) {
