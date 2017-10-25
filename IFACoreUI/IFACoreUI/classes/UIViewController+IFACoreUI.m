@@ -155,7 +155,7 @@ typedef NS_ENUM(NSUInteger, IFANavigationBarButtonItemsSide) {
                 UIViewController *topLevelParentViewController = [self ifa_topLevelParentViewController];
                 CGFloat offset;   // Ignores tabbar or anything else that could be at the bottom of parent view controllers. Logic varies depending on iOS version. :-(
                 if (@available(iOS 11, *)) {
-                    CGFloat tabBarHeight = self.tabBarController.tabBar.bounds.size.height;
+                    CGFloat tabBarHeight = [self IFA_tabBarHeight];
                     CGFloat topLevelSafeAreaBottomInset = topLevelParentViewController.view.safeAreaInsets.bottom;
                     offset = [UIScreen mainScreen].bounds.size.height - self.view.bounds.size.height - tabBarHeight - topLevelSafeAreaBottomInset;
                 } else {
@@ -178,6 +178,10 @@ typedef NS_ENUM(NSUInteger, IFANavigationBarButtonItemsSide) {
 
 //    }
 
+}
+
+- (CGFloat)IFA_tabBarHeight {
+    return [IFAUtils isRunningInSimulator] ? 0 : self.tabBarController.tabBar.bounds.size.height;  // C'mon Apple, WTF is this?
 }
 
 - (void)IFA_incrementSafeAreaBottomInsetBy:(CGFloat)increment {
@@ -384,8 +388,8 @@ typedef NS_ENUM(NSUInteger, IFANavigationBarButtonItemsSide) {
             }
         }
         CGFloat toolbarHeight = self.ifa_toolbar.bounds.size.height;
-        CGFloat tabbarHeight = [IFAUtils isRunningInSimulator] ? 0 : self.tabBarController.tabBar.bounds.size.height;  // C'mon Apple, WTF is this?
-        CGFloat additionalSafeAreaBottomInset = toolbarHeight + tabbarHeight;
+        CGFloat tabBarHeight = [self IFA_tabBarHeight];
+        CGFloat additionalSafeAreaBottomInset = toolbarHeight + tabBarHeight;
         if (a_toolbarHidden) {
             additionalSafeAreaBottomInset = additionalSafeAreaBottomInset * (-1);
         }
