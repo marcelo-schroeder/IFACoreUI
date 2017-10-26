@@ -1893,14 +1893,14 @@ withAlertPresenterViewController:nil];
 
     if ([a_notification.name isEqualToString:UIKeyboardDidShowNotification]) {
 
-        [self IFA_handleContentBottomInsetAppleBugIfRequiredForKeyboardShowing:YES];
+//        [self IFA_handleContentBottomInsetAppleBugIfRequiredForKeyboardShowing:YES];
 
         __weak __typeof(self) l_weakSelf = self;
         [IFAUtils dispatchAsyncMainThreadBlock:^{
             [l_weakSelf.tableView flashScrollIndicators];
         }];
 
-    }else if ([a_notification.name isEqualToString:UIKeyboardDidHideNotification]) {
+//    }else if ([a_notification.name isEqualToString:UIKeyboardDidHideNotification]) {
 
 //        if (self.ifa_activePopoverController && !self.ifa_activePopoverControllerBarButtonItem) {
 //
@@ -1910,7 +1910,7 @@ withAlertPresenterViewController:nil];
 //
 //        }
 
-        [self IFA_handleContentBottomInsetAppleBugIfRequiredForKeyboardShowing:NO];
+//        [self IFA_handleContentBottomInsetAppleBugIfRequiredForKeyboardShowing:NO];
 
     }
 
