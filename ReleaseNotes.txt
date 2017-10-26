@@ -10,3 +10,4 @@
 [NEW] New method in UIViewController+IFACoreUI: ifa_topLevelParentViewController.
 [FIX] Fixed iPhone X issue in the ifa_isCellFullyVisibleForRowAtIndexPath: method in UITableView+IFACoreUI.
 [FIX] Fixed iPhone X layout issue in IFAMapSettingsViewController.
+[FIX] For iOS 11 and greater: IFAGridViewController nows sets contentInsetAdjustmentBehavior to UIScrollViewContentInsetAdjustmentNever when gridViewDataSource implements contentInset to avoid layout issues.
