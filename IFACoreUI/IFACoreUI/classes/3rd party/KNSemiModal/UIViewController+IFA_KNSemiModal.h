@@ -23,7 +23,7 @@
 
 -(void)presentSemiModalViewController:(UIViewController*)vc;
 -(void)presentSemiModalView:(UIView*)vc;
-- (void)dismissSemiModalViewWithCompletionBlock:(void (^)())a_completionBlock;
+- (void)dismissSemiModalViewWithCompletionBlock:(void (^)(void))a_completionBlock;
 //-(void)handleWillAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation;
 
 @end

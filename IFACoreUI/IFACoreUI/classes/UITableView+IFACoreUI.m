@@ -77,15 +77,31 @@
         l_tableViewRectLocalHeightOffset +=  - l_sectionHeaderRectLocalHeight - l_sectionFooterRectLocalHeight;
     }
     CGFloat l_tableViewRectLocalHeight = l_tableViewFrameSize.height + l_tableViewRectLocalHeightOffset;
-    CGRect l_tableViewRectLocal = CGRectMake(l_tableViewRectLocalX, l_tableViewRectLocalY, l_tableViewRectLocalWidth, l_tableViewRectLocalHeight);
+    CGRect l_tableViewRectLocal = CGRectMake(ceil(l_tableViewRectLocalX), ceil(l_tableViewRectLocalY), ceil(l_tableViewRectLocalWidth), ceil(l_tableViewRectLocalHeight));
     CGRect l_tableViewRectGlobal = [l_tableView.superview convertRect:l_tableViewRectLocal toView:nil];
 
     // Cell rect
-    CGRect l_cellViewRectLocal = [l_tableView rectForRowAtIndexPath:a_indexPath];
+    CGRect l_rectForRow = [l_tableView rectForRowAtIndexPath:a_indexPath];
+    CGRect l_cellViewRectLocal = CGRectMake(ceil(l_rectForRow.origin.x), ceil(l_rectForRow.origin.y), ceil(l_rectForRow.size.width), ceil(l_rectForRow.size.height));
     CGRect l_cellViewRectGlobal = [l_tableView convertRect:l_cellViewRectLocal toView:nil];
 
     BOOL l_fullyVisible = CGRectContainsRect(l_tableViewRectGlobal, l_cellViewRectGlobal);
 
+//    // For debugging only
+//    [[self.superview viewWithTag:NSIntegerMax] removeFromSuperview];
+//    UIView *debugTableView = [[UIView alloc] initWithFrame:l_tableViewRectLocal];
+//    debugTableView.translatesAutoresizingMaskIntoConstraints = NO;
+//    debugTableView.tag = NSIntegerMax;
+//    debugTableView.backgroundColor = [[UIColor redColor] colorWithAlphaComponent:0.25];
+//    [self.superview addSubview:debugTableView];
+//    [self.superview bringSubviewToFront:debugTableView];
+//    [[self viewWithTag:NSIntegerMax] removeFromSuperview];
+//    UIView *debugCellView = [[UIView alloc] initWithFrame:l_cellViewRectLocal];
+//    debugCellView.translatesAutoresizingMaskIntoConstraints = NO;
+//    debugCellView.tag = NSIntegerMax;
+//    debugCellView.backgroundColor = [[UIColor blueColor] colorWithAlphaComponent:0.25];
+//    [self addSubview:debugCellView];
+//    [self bringSubviewToFront:debugCellView];
 //    NSLog(@"  NSStringFromCGRect(l_tableViewRectLocal) = %@", NSStringFromCGRect(l_tableViewRectLocal));
 //    NSLog(@"  NSStringFromCGRect(l_cellViewRectLocal) = %@", NSStringFromCGRect(l_cellViewRectLocal));
 //    NSLog(@"  NSStringFromCGRect(l_sectionHeaderRectLocal) = %@", NSStringFromCGRect(l_sectionHeaderRectLocal));

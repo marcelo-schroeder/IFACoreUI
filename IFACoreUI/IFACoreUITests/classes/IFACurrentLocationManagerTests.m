@@ -5,9 +5,9 @@
 //  Created by: Marcelo Schroeder
 //
 
-#import "IFACommonTests.h"
 @import IFACoreUI;
 #import "IFACoreUITestCase.h"
+@import IFATestingSupport;
 
 //NOTE: these thresholds are relative to the default values defined in IFACurrentLocationManager.h
 static NSTimeInterval const k_LocationAgeWithinThreshold = 30.0;

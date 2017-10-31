@@ -236,29 +236,38 @@
     [self.IFA_pickerContainerView ifa_addLayoutConstraintsForSize:l_pickerContainerViewSize];
     [self.IFA_datePicker ifa_addLayoutConstraintsToCenterInSuperview];
 
-    NSDictionary *l_views;
-    NSString *l_visualFormatConstraints;
+    NSDictionary *views;
+    CGFloat toolbarHeight;
+    if (@available(iOS 11.0, *)) {
+        toolbarHeight = self.ifa_needsToolbar ? self.ifa_toolbar.bounds.size.height : 0;
+    } else {
+        toolbarHeight = 0;
+    }
+    NSDictionary *metrics = @{
+                              @"segmentedControlTopSpace" : @15,
+                              @"toolbarHeight" : @(toolbarHeight),
+                              };
+    NSString *visualFormatConstraints;
     id l_pickerContainerView = self.IFA_pickerContainerView;
     if (self.showTimePicker) {
         self.IFA_segmentedControl.translatesAutoresizingMaskIntoConstraints = NO;
         [self.IFA_timePicker ifa_addLayoutConstraintsToCenterInSuperview];
-        [self.IFA_segmentedControl ifa_addLayoutConstraintToCenterInSuperviewHorizontally];
         id l_segmentedControl = self.IFA_segmentedControl;
-        l_views = NSDictionaryOfVariableBindings(l_segmentedControl, l_pickerContainerView);
-        l_visualFormatConstraints = @"V:|-15-[l_segmentedControl][l_pickerContainerView]|";
+        views = NSDictionaryOfVariableBindings(l_segmentedControl, l_pickerContainerView);
+        // >= at the bottom allows layout to flow outside safe area
+        visualFormatConstraints = @"V:|-(segmentedControlTopSpace)-[l_segmentedControl][l_pickerContainerView]-(>=toolbarHeight)-|";
     }else{
-        l_views = NSDictionaryOfVariableBindings(l_pickerContainerView);
-        l_visualFormatConstraints = @"V:|[l_pickerContainerView]|";
+        views = NSDictionaryOfVariableBindings(l_pickerContainerView);
+        // >= at the bottom allows layout to flow outside safe area
+        visualFormatConstraints = @"V:|[l_pickerContainerView]-(>=toolbarHeight)-|";
     }
-    NSArray *l_verticalLayoutConstraints = [NSLayoutConstraint constraintsWithVisualFormat:l_visualFormatConstraints
+    NSArray *l_verticalLayoutConstraints = [NSLayoutConstraint constraintsWithVisualFormat:visualFormatConstraints
                                                                                    options:NSLayoutFormatAlignAllCenterX
-                                                                                   metrics:nil
-                                                                                     views:l_views];
+                                                                                   metrics:metrics
+                                                                                     views:views];
     [self.view addConstraints:l_verticalLayoutConstraints];
 
-    CGRect l_viewFrame = CGRectZero;
-    l_viewFrame.size = [self.view systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-    self.view.frame = l_viewFrame;
+    [self.IFA_pickerContainerView ifa_addLayoutConstraintToCenterInSuperviewHorizontally];
 
 }
 

@@ -506,7 +506,7 @@ withAlertPresenterViewController:(UIViewController *)a_alertPresenterViewControl
   shouldShowSuccessfulDeletionHudConfirmation:(BOOL)shouldShowSuccessfulDeletionHudConfirmation
                             willDeleteHandler:(BOOL (^)(NSManagedObject *objectAboutToBeDeleted))willDeleteHandler
                             completionHandler:(void (^)(BOOL success))completionHandler {
-    void (^destructiveActionBlock)() = ^{
+    void (^destructiveActionBlock)(void) = ^{
         BOOL shouldDeleteObject = YES;
         if (willDeleteHandler) {
             shouldDeleteObject = willDeleteHandler(object);

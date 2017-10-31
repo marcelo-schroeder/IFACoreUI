@@ -57,7 +57,7 @@
 * Block to execute when the user cancels the operation.
 * When not nil, this will enable user interaction for cancellation of the current operation.
 */
-@property(nonatomic, strong) void (^cancellationCompletionBlock)();
+@property(nonatomic, strong) void (^cancellationCompletionBlock)(void);
 
 /**
 * Presents the HUD view in its dedicated UIWindow instance.

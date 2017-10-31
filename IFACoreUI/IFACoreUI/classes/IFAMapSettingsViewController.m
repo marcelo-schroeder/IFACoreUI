@@ -49,7 +49,6 @@
                          forSegmentAtIndex:[self IFA_segmentIndexFromMapType:MKMapTypeHybrid]];
     [self.mapTypeSegmentedControl setTitle:NSLocalizedStringFromTable(@"Satellite", @"IFALocalizable", nil)
                          forSegmentAtIndex:[self IFA_segmentIndexFromMapType:MKMapTypeSatellite]];
-    [self IFA_configureView];
 }
 
 -(BOOL)ifa_hasFixedSize {
@@ -86,14 +85,6 @@
             l_mapType = MKMapTypeSatellite;
     }
     return l_mapType;
-}
-
-- (void)IFA_configureView {
-    // Fixed size for modal presentation
-    CGSize l_size = [self.view systemLayoutSizeFittingSize:UILayoutFittingExpandedSize];
-    CGRect l_frame = self.view.frame;
-    l_frame.size = l_size;
-    self.view.frame = l_frame;
 }
 
 - (MKMapType)IFA_selectedMapType {

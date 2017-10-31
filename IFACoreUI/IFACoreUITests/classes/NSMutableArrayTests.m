@@ -17,9 +17,9 @@
 //  limitations under the License.
 //
 
-#import "IFACommonTests.h"
 #import "NSMutableArray+IFACoreUI.h"
 #import "IFACoreUITestCase.h"
+@import OCHamcrest;
 
 @interface NSMutableArrayTests : IFACoreUITestCase
 @property(nonatomic, strong) NSMutableArray *p_mutableArray;

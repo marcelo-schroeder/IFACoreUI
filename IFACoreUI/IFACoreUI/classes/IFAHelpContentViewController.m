@@ -60,7 +60,7 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
     __weak __typeof(self) l_weakSelf = self;
-    void (^animations)() = ^{
+    void (^animations)(void) = ^{
         l_weakSelf.webView.alpha = 1;
     };
     void (^completion)(BOOL) = ^(BOOL finished) {

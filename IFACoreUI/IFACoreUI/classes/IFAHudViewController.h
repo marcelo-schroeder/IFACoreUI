@@ -77,7 +77,7 @@
 *
 * Setting this to a value other than nil, automatically sets the <modal> property to YES, which enables user interactivity in the HUD.
 */
-@property (nonatomic, strong) void (^chromeTapActionBlock) ();
+@property (nonatomic, strong) void (^chromeTapActionBlock) (void);
 
 /**
 * Indicates whether the view controller should be dismissed or not when the user taps the HUD's overlay view.
@@ -92,7 +92,7 @@
 *
 * Setting this to a value other than nil, automatically sets the <modal> property to YES, which enables user interactivity in the HUD.
 */
-@property (nonatomic, strong) void (^overlayTapActionBlock) ();
+@property (nonatomic, strong) void (^overlayTapActionBlock) (void);
 
 /**
 * Indicates whether the HUD will modal or not.

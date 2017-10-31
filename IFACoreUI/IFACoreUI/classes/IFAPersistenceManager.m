@@ -58,7 +58,7 @@ static NSString *METADATA_KEY_SYSTEM_DB_TABLES_VERSION = @"systemDbTablesVersion
 
 #pragma mark - Private
 
--(void (^)())IFA_wrapperForBlock:(void (^)())a_block managedObjectContext:(NSManagedObjectContext*)a_managedObjectContext{
+-(void (^)(void))IFA_wrapperForBlock:(void (^)(void))a_block managedObjectContext:(NSManagedObjectContext*)a_managedObjectContext{
     return ^{
         NSMutableDictionary *l_threadDict = [[NSThread currentThread] threadDictionary];
         l_threadDict[self.threadDictionaryKeyManagedObjectContext] = a_managedObjectContext;
@@ -1165,34 +1165,34 @@ IFA_sqlStoreUrlForDatabaseResourceName:(NSString *)a_databaseResourceName
     return sortDescriptors;
 }
 
-- (void)performOnMainManagedObjectContextQueue:(void (^)())a_block{
+- (void)performOnMainManagedObjectContextQueue:(void (^)(void))a_block{
     [self performOnQueueOfManagedObjectContext:self.managedObjectContext
                                          block:a_block];
 }
 
-- (void)performAndWaitOnMainManagedObjectContextQueue:(void (^)())a_block{
+- (void)performAndWaitOnMainManagedObjectContextQueue:(void (^)(void))a_block{
     [self performAndWaitOnQueueOfManagedObjectContext:self.managedObjectContext
                                                 block:a_block];
 }
 
 - (void)performOnQueueOfManagedObjectContext:(NSManagedObjectContext *)a_managedObjectContext
-                                       block:(void (^)())a_block {
+                                       block:(void (^)(void))a_block {
     [a_managedObjectContext performBlock:[self IFA_wrapperForBlock:a_block managedObjectContext:a_managedObjectContext]];
 }
 
 - (void)performAndWaitOnQueueOfManagedObjectContext:(NSManagedObjectContext *)a_managedObjectContext
-                                              block:(void (^)())a_block {
+                                              block:(void (^)(void))a_block {
     [a_managedObjectContext performBlockAndWait:[self IFA_wrapperForBlock:a_block
                                                      managedObjectContext:a_managedObjectContext]];
 }
 
-- (void)performOnCurrentThreadForMainManagedObjectContext:(void (^)())a_block {
+- (void)performOnCurrentThreadForMainManagedObjectContext:(void (^)(void))a_block {
     [self IFA_wrapperForBlock:a_block
          managedObjectContext:self.managedObjectContext]();
 }
 
 - (void)performOnCurrentThreadWithManagedObjectContext:(NSManagedObjectContext *)a_managedObjectContext
-                                                 block:(void (^)())a_block {
+                                                 block:(void (^)(void))a_block {
     [self IFA_wrapperForBlock:a_block
          managedObjectContext:a_managedObjectContext]();
 }

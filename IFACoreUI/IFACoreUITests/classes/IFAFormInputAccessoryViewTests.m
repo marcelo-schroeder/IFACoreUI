@@ -21,8 +21,9 @@
 #import <OCMock/OCMStubRecorder.h>
 #import <OCMock/OCMArg.h>
 #import <OCMock/OCMockObject.h>
-#import <IFATestingSupport/IFACommonTests.h>
 #import "IFACoreUITestCase.h"
+@import OCHamcrest;
+@import IFATestingSupport;
 
 @interface IFAFormInputAccessoryView (Tests)
 @property (strong, nonatomic) NSIndexPath *IFA_currentInputFieldIndexPath;

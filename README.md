@@ -4,9 +4,16 @@
 ![Licence](https://img.shields.io/cocoapods/l/IFACoreUI.svg)
 ![Platform](https://img.shields.io/cocoapods/p/IFACoreUI.svg)
 
-IFACoreUI is a Cocoa Touch framework that helps you develop high quality iOS apps and app extensions faster. It requires iOS 8 or greater and it is safe to be linked against app extensions.
+IFACoreUI is a Cocoa Touch framework that helps you develop high quality iOS apps and app extensions faster. IFACoreUI is safe to be linked against app extensions.
 
 IFACoreUI provides the foundation for [IFAAppUI](https://github.com/marcelo-schroeder/IFAAppUI). If you need enhanced API functionality that is safe to use by app extensions, then use IFACoreUI. IFAAppUI provides extra functionality on top of IFACoreUI that only apps can use (e.g. access to UIApplication).
+
+Compatibility information:
+
+| IFACoreUI version | Xcode version | iOS deployment target | Swift version |
+| ----------------- | ------------- | --------------------- | ------------- |
+| 1.x               | 8.x           | 9.0                   | 3.2           |
+| 2.x               | 9.x           | 10.0                  | 4.0           |
 
 This framework has been used in a few projects for my clients.
 

@@ -127,8 +127,16 @@ static BOOL c_presentedInLandscapeInterfaceOrientation;
         CGRect vf = target.bounds;
 //        NSLog(@"vf: %@", NSStringFromCGRect(vf));
 //        NSLog(@"target.bounds: %@", NSStringFromCGRect(target.bounds));
-        CGRect f  = CGRectMake(0, vf.size.height-sf.size.height, vf.size.width, sf.size.height);
-//        CGRect of = CGRectMake(0, 0, vf.size.width, vf.size.height-sf.size.height);
+
+        CGFloat safeAreaBottomInset;
+        if (@available(iOS 11.0, *)) {
+            safeAreaBottomInset = target.safeAreaInsets.bottom;
+        } else {
+            safeAreaBottomInset = 0;
+        }
+
+        CGRect f  = CGRectMake(0, vf.size.height-sf.size.height-safeAreaBottomInset, vf.size.width, sf.size.height+safeAreaBottomInset);
+//        CGRect f = CGRectMake(0, 0, vf.size.width, vf.size.height-sf.size.height);
         
         // Add semi overlay
         UIView * overlay = [[UIView alloc] initWithFrame:target.bounds];
@@ -187,7 +195,7 @@ static BOOL c_presentedInLandscapeInterfaceOrientation;
     
 }
 
-- (void)dismissSemiModalViewWithCompletionBlock:(void (^)())a_completionBlock {
+- (void)dismissSemiModalViewWithCompletionBlock:(void (^)(void))a_completionBlock {
     UIView * modal = self.semiModalView;
     UIView * target = [self parentTarget];
     UIView * overlay = (target.subviews)[target.subviews.count - 2];

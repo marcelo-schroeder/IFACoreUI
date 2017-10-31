@@ -1,4 +1,4 @@
-platform :ios, '8.0'
+platform :ios, '10.0'
 workspace 'IFACoreUI'
 project 'IFACoreUI/IFACoreUI.xcodeproj'
 use_frameworks!
@@ -14,9 +14,9 @@ target :IFACoreUI do
     pod 'IFATestingSupport'
 #pod 'IFATestingSupport', :git => 'https://github.com/marcelo-schroeder/IFATestingSupport.git', :tag => 'v0.1.1'
 # pod 'IFATestingSupport', :git => 'https://github.com/marcelo-schroeder/IFATestingSuport.git', :branch => 'development'
-# pod 'IFATestingSupport', :path => '/Users/mschroeder/myfiles/projects/Xcode6/IFATestingSupport/IFATestingSupport_development'
+# pod 'IFATestingSupport', :path => '/Users/mschroeder/myfiles/projects/Xcode/IFATestingSupport/IFATestingSupport_development'
     pod 'OCHamcrest', :inhibit_warnings => true
-    pod 'OCMock'
+    pod 'OCMock', :inhibit_warnings => true
   end
 
 end

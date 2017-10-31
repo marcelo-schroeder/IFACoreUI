@@ -64,7 +64,7 @@
 
     NSTimeInterval duration = [self transitionDuration:transitionContext];
     __weak __typeof(self) l_weakSelf = self;
-    void (^animations)() = ^{
+    void (^animations)(void) = ^{
         if (l_weakSelf.IFA_animationsBlock) {
             l_weakSelf.IFA_animationsBlock(l_weakSelf.isPresenting, animatingView);
         }

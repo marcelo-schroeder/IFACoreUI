@@ -5,11 +5,11 @@
 //  Created by: Marcelo Schroeder
 //
 
-#import "IFACommonTests.h"
 #import "IFACoreUITestCase.h"
 @import IFACoreUI;
 #import "TestCoreDataEntity1+CoreDataClass.h"
 #import "TestCoreDataEntity1+CoreDataProperties.h"
+@import IFATestingSupport;
 
 @interface IFASelectionManagerTests : IFACoreUITestCase <IFASelectionManagerDataSource>
 @property(nonatomic, strong) IFASelectionManager *selectionManager;
