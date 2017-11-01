@@ -82,7 +82,7 @@
     return l_validLocation;
 }
 
-- (void)IFA_handleLocationEventWithBlock:(void(^)())a_block {
+- (void)IFA_handleLocationEventWithBlock:(void(^)(void))a_block {
 //    NSLog(@"  IFA_handleLocationEventWithBlock");
     if (self.IFA_pendingCurrentLocationRequest) {
         self.IFA_pendingCurrentLocationRequest = NO;
@@ -162,7 +162,7 @@
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedMethodInspection"
-- (void)cancelRequestWithCompletionBlock:(void (^)())a_completionBlock {
+- (void)cancelRequestWithCompletionBlock:(void (^)(void))a_completionBlock {
     [self IFA_handleLocationEventWithBlock:a_completionBlock];
 }
 #pragma clang diagnostic pop

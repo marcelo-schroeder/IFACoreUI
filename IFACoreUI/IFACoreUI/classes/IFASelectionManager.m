@@ -107,7 +107,7 @@
         }
     }
 
-    void (^selectionStateChangeBlock)() = ^{
+    void (^selectionStateChangeBlock)(void) = ^{
 
         // Add new selection
         if (l_selectedObject) {
@@ -186,7 +186,7 @@
                                                     deselectedObject:(id)a_deselectedObject
                                                            indexPath:(NSIndexPath *)a_indexPath
                                                             userInfo:(NSDictionary *)a_userInfo
-                                                    stateChangeBlock:(void (^)())a_stateChangeBlock {
+                                                    stateChangeBlock:(void (^)(void))a_stateChangeBlock {
 
     // Notify delegate before state change
     if ([self.delegate respondsToSelector:@selector(selectionManager:willSelectObject:deselectObject:indexPath:userInfo:)]) {

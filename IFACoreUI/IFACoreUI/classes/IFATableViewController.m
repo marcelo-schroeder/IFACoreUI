@@ -267,6 +267,16 @@
     
 }
 
+-(void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    [self ifa_viewWillLayoutSubviews];
+}
+
+-(void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    [self ifa_viewDidLayoutSubviews];
+}
+
 -(UITableView *)tableView{
     if (self.shouldCreateContainerViewOnLoadView) {
         if (!self.view) {
@@ -311,6 +321,9 @@
     [self ifa_viewDidLoad];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    self.tableView.estimatedRowHeight = IFAMinimumTapAreaDimension;
 
     if ([self shouldClearSelectionOnViewDidAppear]) {
         self.clearsSelectionOnViewWillAppear = NO;

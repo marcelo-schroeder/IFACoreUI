@@ -84,7 +84,7 @@ typedef void (^IFACurrentLocationManagerCompletionBlock)(CLLocation *a_location)
 */
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedMethodInspection"
-- (void)cancelRequestWithCompletionBlock:(void (^)())a_completionBlock;
+- (void)cancelRequestWithCompletionBlock:(void (^)(void))a_completionBlock;
 #pragma clang diagnostic pop
 
 /**

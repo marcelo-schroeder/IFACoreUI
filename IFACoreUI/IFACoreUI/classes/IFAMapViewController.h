@@ -51,7 +51,7 @@
 
 /**
 * Determines the authorisation type to be requested before the user location can be shown on the map.
-* Default: IFALocationAuthorizationTypeAlways.
+* Default: IFALocationAuthorizationTypeWhenInUse.
 */
 @property (nonatomic) IFALocationAuthorizationType locationAuthorizationType;
 

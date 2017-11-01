@@ -5,9 +5,9 @@
 //  Created by: Marcelo Schroeder
 //
 
-#import "IFACommonTests.h"
 @import IFACoreUI;
 #import "IFACoreUITestCase.h"
+@import IFATestingSupport;
 
 @interface IFALocationManagerTests : IFACoreUITestCase
 @end

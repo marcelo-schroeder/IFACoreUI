@@ -27,7 +27,7 @@ CGFloat const IFATableViewEditingCellXOffset = 38;
 CGFloat const IFAFormSectionHeaderDefaultHeight = 39;
 CGFloat const IFATableViewCellSeparatorDefaultInsetLeft = 15;
 CGFloat const IFAIPhoneStatusBarDoubleHeight = 40;
-NSTimeInterval const IFAAnimationDuration = 0.5;
+NSTimeInterval const IFAAnimationDuration = 0.3;
 
 NSString* const IFACacheKeyEntityConfigDictionary = @"ifa.entityConfigDictionary";
 NSString* const IFACacheKeyMenuViewControllersDictionary = @"ifa.menuViewControllersDictionary";

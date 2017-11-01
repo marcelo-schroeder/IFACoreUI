@@ -136,7 +136,7 @@
 - (void)IFA_onDeleteButtonTap {
     NSUInteger selectedItemsCount = self.tableView.indexPathsForSelectedRows.count;
     NSAssert(selectedItemsCount > 0, nil);
-    void (^destructiveActionBlock)() = ^{
+    void (^destructiveActionBlock)(void) = ^{
         [self IFA_deleteManagedObjectsAtIndexPaths:self.tableView.indexPathsForSelectedRows];
     };
     NSString *message = [NSString stringWithFormat:NSLocalizedStringFromTable(@"Are you sure you want to delete the %@ selected item(s)?", @"IFALocalizable", @"Are you sure you want to delete the <SELECTED_ITEMS_COUNT> selected item(s)?"), @(selectedItemsCount)];

@@ -22,7 +22,7 @@
 - (BOOL)waitForSemaphore:(dispatch_semaphore_t)a_semaphore
 shouldShowModalProgressIndicator:(BOOL)a_shouldShowModalProgressIndicator
         progressIndicatorMessage:(NSString *)a_progressIndicatorMessage
-            semaphoreNoWaitBlock:(void (^)())a_semaphoreNoWaitBlock
-          semaphoreWaitOverBlock:(void (^)())a_semaphoreWaitOverBlock
-           userCancellationBlock:(void (^)())a_userCancellationBlock;
+    semaphoreNoWaitBlock:(void (^)(void))a_semaphoreNoWaitBlock
+  semaphoreWaitOverBlock:(void (^)(void))a_semaphoreWaitOverBlock
+   userCancellationBlock:(void (^)(void))a_userCancellationBlock;
 @end

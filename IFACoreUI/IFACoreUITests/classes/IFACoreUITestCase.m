@@ -15,10 +15,9 @@
 //  limitations under the License.
 //
 
-#import "IFACommonTests.h"
 #import "IFACoreUITestCase.h"
 @import IFACoreUI;
-
+@import IFATestingSupport;
 
 @implementation IFACoreUITestCase {
 

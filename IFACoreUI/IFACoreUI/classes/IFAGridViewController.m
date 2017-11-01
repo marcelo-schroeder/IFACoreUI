@@ -217,6 +217,11 @@
                                              selector:@selector(IFA_onApplicationWillChangeStatusBarFrameNotification:)
                                                  name:UIApplicationWillChangeStatusBarFrameNotification
                                                object:nil];
+    if (@available(iOS 11.0, *)) {
+        if ([self.gridViewDataSource respondsToSelector:@selector(contentInset)]) {
+            self.collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+        }
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {

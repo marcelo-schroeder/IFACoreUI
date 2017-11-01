@@ -334,11 +334,11 @@ typedef NS_ENUM(NSUInteger, IFAHudContentSubviewId) {
 /**
 * Block to execute when the user taps the HUD's chrome view.
 */
-@property (nonatomic, strong) void (^chromeTapActionBlock) ();
+@property (nonatomic, strong) void (^chromeTapActionBlock) (void);
 
 /**
 * Block to execute when the user taps the HUD's overlay view.
 */
-@property (nonatomic, strong) void (^overlayTapActionBlock) ();
+@property (nonatomic, strong) void (^overlayTapActionBlock) (void);
 
 @end

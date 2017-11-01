@@ -1,10 +1,10 @@
 PODS:
-  - IFAFoundation (1.3.0)
-  - IFATestingSupport (1.0.3):
-    - OCHamcrest (~> 4)
+  - IFAFoundation (2.0.0)
+  - IFATestingSupport (2.0.5):
+    - OCHamcrest (~> 7)
     - OCMock (~> 3)
-  - OCHamcrest (4.3.0)
-  - OCMock (3.2)
+  - OCHamcrest (7.0.1)
+  - OCMock (3.4)
 
 DEPENDENCIES:
   - IFAFoundation
@@ -13,11 +13,11 @@ DEPENDENCIES:
   - OCMock
 
 SPEC CHECKSUMS:
-  IFAFoundation: dece78e86cfc77612df09da427bb0e9e8e73c164
-  IFATestingSupport: 6558e25b6d4bac3fc11caec7ffe05e6e4bfbca77
-  OCHamcrest: cd63d27f48a266d4412c0b295b01b8f0940efa81
-  OCMock: 28def049ef47f996b515a8eeea958be7ccab2dbb
+  IFAFoundation: 9d66631ee62a46da6442d30a8a231e8dbb621439
+  IFATestingSupport: 2a320b09311a43d2f899e3e1c6bf46e645f06a46
+  OCHamcrest: 7c2229e7ea96eecd6e43dbef7c68e1dfbd6928b8
+  OCMock: 35ae71d6a8fcc1b59434d561d1520b9dd4f15765
 
-PODFILE CHECKSUM: 9b537ade41792254f8eb2516f0c475231f5be4c1
+PODFILE CHECKSUM: b1e459194e163cb21538d6f64bf6ed522df9dfbb
 
-COCOAPODS: 1.2.1
+COCOAPODS: 1.3.1

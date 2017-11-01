@@ -19,6 +19,7 @@
 //
 
 #import "IFACoreUI.h"
+#import <IFACoreUI/IFACoreUI-Swift.h>
 
 @interface IFADefaultAppearanceTheme ()
 
@@ -780,7 +781,27 @@ IFA_tableViewCellSelectedBackgroundStyleForIndexPath:(NSIndexPath *)a_indexPath
 - (NSNumber *)spaceBarButtonItemWidthForPosition:(IFABarButtonItemSpacingPosition)a_position
                                          barType:(IFABarButtonItemSpacingBarType)a_barType
                                   viewController:(UIViewController *)a_viewController items:(NSArray *)a_items {
-    return nil;
+    if (@available(iOS 11, *)) {
+        NSNumber *spaceWidth = nil;
+        switch (a_barType){
+            case IFABarButtonItemSpacingBarTypeNavigationBar:
+                switch (a_position){
+                    case IFABarButtonItemSpacingPositionLeft:
+                        if ([a_viewController ifa_showingNavigationBarBackButton]) {
+                            spaceWidth = @6;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            default:
+                break;
+        }
+        return spaceWidth;
+    } else {
+        return nil;
+    }
 }
 
 - (UIBarButtonItem *)doneBarButtonItemWithTarget:(id)a_target action:(SEL)a_action

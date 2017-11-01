@@ -143,7 +143,7 @@
 - (IBAction)onCancelButtonAction:(id)sender {
     if ([self hasValueChanged]) {
         __weak __typeof(self) l_weakSelf = self;
-        void (^destructiveActionBlock)() = ^{
+        void (^destructiveActionBlock)(void) = ^{
             [l_weakSelf IFA_quitEditing];
         };
         [self ifa_presentAlertControllerWithTitle:nil

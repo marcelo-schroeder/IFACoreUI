@@ -638,10 +638,6 @@ static NSString *const k_sectionHeaderFooterReuseId = @"sectionHeaderFooter";
     }
 }
 
-- (BOOL)IFA_shouldAdjustContentInsetForPresentedViewController:(UIViewController *)a_viewController {
-    return a_viewController.ifa_hasFixedSize;
-}
-
 - (UIView *)IFA_sectionHeaderFooterWithLabelText:(NSString *)a_labelText
                                         isHeader:(BOOL)a_isHeader
                                          section:(NSUInteger)a_section {
@@ -762,7 +758,7 @@ static NSString *const k_sectionHeaderFooterReuseId = @"sectionHeaderFooter";
                 NSString *title = [NSString stringWithFormat:NSLocalizedStringFromTable(@"%@ modified externally", @"IFALocalizable", @"ENTITY_LABEL modified externally"),
                                                              objectLabel];
                 NSString *message = NSLocalizedStringFromTable(@"Editing will be cancelled and changes discarded.", @"IFALocalizable", nil);
-                void (^actionBlock)() = ^{
+                void (^actionBlock)(void) = ^{
                     [weakSelf IFA_quitEditingForced:YES];
                 };
                 [self ifa_presentAlertControllerWithTitle:title
@@ -784,10 +780,10 @@ static NSString *const k_sectionHeaderFooterReuseId = @"sectionHeaderFooter";
     if (self.editing) {
         if (!a_forced && self.IFA_isManagedObject && ([IFAPersistenceManager sharedInstance].isCurrentManagedObjectDirty || self.IFA_textFieldTextChanged)) {
             __weak __typeof(self) l_weakSelf = self;
-            void (^destructiveActionBlock)() = ^{
+            void (^destructiveActionBlock)(void) = ^{
                 [l_weakSelf IFA_rollbackAndRestoreNonEditingState];
             };
-            void (^cancelBlock)() = ^{
+            void (^cancelBlock)(void) = ^{
                 // Notify that any pending context switch has been denied
                 [l_weakSelf replyToContextSwitchRequestWithGranted:NO];
             };
@@ -1561,20 +1557,6 @@ withAlertPresenterViewController:nil];
 //            self.IFA_indexPathForPopoverController = indexPath;
 //            CGRect l_fromPopoverRect = [self IFA_fromPopoverRectForIndexPath:self.IFA_indexPathForPopoverController];
 
-            if ([self IFA_shouldAdjustContentInsetForPresentedViewController:l_viewController]) {
-                self.contentInsetBeforePresentingSemiModalViewController = tableView.contentInset;
-                CGFloat navigationBarHeight = self.navigationController.navigationBar.bounds.size.height;   // Not the actual navigation bar that will be used. Just a reference for height.
-                CGFloat toolbarHeight = l_viewController.ifa_editModeToolbarItems.count ? navigationBarHeight : 0;   // Assuming the toolbar height is the same as the navigation bar.
-                CGFloat contentBottomInset = l_viewController.view.bounds.size.height + navigationBarHeight + toolbarHeight;
-                [UIView animateWithDuration:IFAAnimationDuration animations:^{
-                    tableView.contentInset = UIEdgeInsetsMake(0, 0, contentBottomInset, 0);
-                }];
-                [tableView scrollToRowAtIndexPath:indexPath
-                                 atScrollPosition:UITableViewScrollPositionBottom
-                                         animated:YES];
-                [tableView deselectRowAtIndexPath:indexPath animated:YES];
-            }
-
             if ([self.formViewControllerDelegate respondsToSelector:@selector(formViewController:willPresentFieldEditorViewController:forIndexPath:propertyName:)]) {
                 l_viewController = [self.formViewControllerDelegate formViewController:self
                                                   willPresentFieldEditorViewController:l_viewController
@@ -1585,6 +1567,11 @@ withAlertPresenterViewController:nil];
                                                    inView:self.tableView];
 //            [self ifa_presentModalSelectionViewController:l_viewController fromRect:l_fromPopoverRect
 //                                                   inView:self.tableView];
+
+            [self.tableView scrollToRowAtIndexPath:indexPath
+                                  atScrollPosition:UITableViewScrollPositionBottom
+                                          animated:YES];
+            [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 
         }
 
@@ -1663,14 +1650,6 @@ withAlertPresenterViewController:nil];
     [super sessionDidCompleteForViewController:a_viewController changesMade:a_changesMade data:a_data
                         shouldAnimateDismissal:a_shouldAnimateDismissal];
     [self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:YES];
-    if ([self IFA_shouldAdjustContentInsetForPresentedViewController:a_viewController]) {
-        __weak __typeof(self) l_weakSelf = self;
-        [UIView animateWithDuration:IFAAnimationDuration animations:^{
-            l_weakSelf.tableView.contentInset = l_weakSelf.contentInsetBeforePresentingSemiModalViewController;
-        } completion:^(BOOL finished) {
-            l_weakSelf.contentInsetBeforePresentingSemiModalViewController = UIEdgeInsetsZero;
-        }];
-    }
 }
 
 #pragma mark -
@@ -1914,14 +1893,14 @@ withAlertPresenterViewController:nil];
 
     if ([a_notification.name isEqualToString:UIKeyboardDidShowNotification]) {
 
-        [self IFA_handleContentBottomInsetAppleBugIfRequiredForKeyboardShowing:YES];
+//        [self IFA_handleContentBottomInsetAppleBugIfRequiredForKeyboardShowing:YES];
 
         __weak __typeof(self) l_weakSelf = self;
         [IFAUtils dispatchAsyncMainThreadBlock:^{
             [l_weakSelf.tableView flashScrollIndicators];
         }];
 
-    }else if ([a_notification.name isEqualToString:UIKeyboardDidHideNotification]) {
+//    }else if ([a_notification.name isEqualToString:UIKeyboardDidHideNotification]) {
 
 //        if (self.ifa_activePopoverController && !self.ifa_activePopoverControllerBarButtonItem) {
 //
@@ -1931,7 +1910,7 @@ withAlertPresenterViewController:nil];
 //
 //        }
 
-        [self IFA_handleContentBottomInsetAppleBugIfRequiredForKeyboardShowing:NO];
+//        [self IFA_handleContentBottomInsetAppleBugIfRequiredForKeyboardShowing:NO];
 
     }
 
@@ -2083,7 +2062,7 @@ withAlertPresenterViewController:nil];
     if (!self.ifa_sessionCompletionNotified && !self.IFA_preparingForDismissalAfterRollback) {  // Table should not be reloaded in these cases (i.e. form will be dismissed soon)
 
         // Reload table view data to update form state
-        void (^tableViewDataReloadBlock)() = ^{
+        void (^tableViewDataReloadBlock)(void) = ^{
             if (animated) {
                 [UIView transitionWithView:self.view
                                   duration:IFAAnimationDuration
