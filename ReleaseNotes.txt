@@ -1,13 +1,1 @@
-[CHANGE] Lowest iOS version supported is now 10.
-[NEW] New function added to the UIViewController's extension: ifa_showingNavigationBarBackButton().
-[CHANGE] For iOS 11 and greater: added some smarts to improve layout of left navigation bar buttons when a back button is showing.
-[CHANGE] IFAMapViewController now uses IFALocationAuthorizationTypeWhenInUse as the default value for the locationAuthorizationType property.
-[FIX] Fixed issues with documentation in IFALocationManager.h.
-[FIX] Fixed bug in the performLocationServicesChecksWithAlertPresenterViewController: method in IFALocationManager that caused the incorrect error message to be displayed in some situations.
-[CHANGE] rowHeight and estimatedRowHeight are now set to UITableViewAutomaticDimension and IFAMinimumTapAreaDimension in IFATableViewController.
-[FIX] Fixed layout issues introduced with iOS 11 in IFAPickerViewController and IFADatePickerViewController.
-[FIX] Fixed issues with toolbar management introduced with iOS 11.
-[NEW] New method in UIViewController+IFACoreUI: ifa_topLevelParentViewController.
-[FIX] Fixed iPhone X issue in the ifa_isCellFullyVisibleForRowAtIndexPath: method in UITableView+IFACoreUI.
-[FIX] Fixed iPhone X layout issue in IFAMapSettingsViewController.
-[FIX] For iOS 11 and greater: IFAGridViewController nows sets contentInsetAdjustmentBehavior to UIScrollViewContentInsetAdjustmentNever when gridViewDataSource implements contentInset to avoid layout issues.
+[CHANGE] Minor build change.
