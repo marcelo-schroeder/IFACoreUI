@@ -1,1 +1,1 @@
-[FIX] Fixed issue with podspec.
+[FIX] Fixed layout issues introduced with iOS 11.1.

@@ -180,8 +180,15 @@ typedef NS_ENUM(NSUInteger, IFANavigationBarButtonItemsSide) {
 
 }
 
+// Introduced in iOS 11
 - (CGFloat)IFA_tabBarHeight {
-    return [IFAUtils isRunningInSimulator] ? 0 : self.tabBarController.tabBar.bounds.size.height;  // C'mon Apple, WTF is this?
+    BOOL newLayoutEngine;   // C'mon Apple, WTF?
+    if (@available(iOS 11.1, *)) {
+        newLayoutEngine = YES;
+    } else {    // iOS 11.0
+        newLayoutEngine = NO;
+    }
+    return newLayoutEngine ? 0 : self.tabBarController.tabBar.bounds.size.height;
 }
 
 - (void)IFA_incrementSafeAreaBottomInsetBy:(CGFloat)increment {
