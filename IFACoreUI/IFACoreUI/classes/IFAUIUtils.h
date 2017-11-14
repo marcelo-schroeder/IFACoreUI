@@ -179,4 +179,6 @@ withAlertPresenterViewController:(UIViewController *)a_alertPresenterViewControl
 + (void)presentAlertControllerWithTitle:(NSString *)a_title
                                 message:(NSString *)a_message;
 
++ (BOOL)deviceSupportsVibration;
+
 @end

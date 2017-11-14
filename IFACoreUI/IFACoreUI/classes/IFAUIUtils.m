@@ -585,4 +585,9 @@ withAlertPresenterViewController:(UIViewController *)a_alertPresenterViewControl
                                completion:nil];
 }
 
++ (BOOL)deviceSupportsVibration{
+//    NSLog(@"[UIDevice currentDevice].model: %@", [UIDevice currentDevice].model);
+    return [[UIDevice currentDevice].model isEqualToString:@"iPhone"];
+}
+
 @end
