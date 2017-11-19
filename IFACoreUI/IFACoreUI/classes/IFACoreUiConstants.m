@@ -29,29 +29,13 @@ CGFloat const IFATableViewCellSeparatorDefaultInsetLeft = 15;
 CGFloat const IFAIPhoneStatusBarDoubleHeight = 40;
 NSTimeInterval const IFAAnimationDuration = 0.3;
 
-NSString* const IFACacheKeyEntityConfigDictionary = @"ifa.entityConfigDictionary";
 NSString* const IFACacheKeyMenuViewControllersDictionary = @"ifa.menuViewControllersDictionary";
 
 // Notifications
-NSString* const IFANotificationPersistentEntityChange = @"ifa.persistentEntityChange";
 NSString* const IFANotificationContextSwitchRequest = @"ifa.contextSwitchRequest";
 NSString* const IFANotificationContextSwitchRequestGranted = @"ifa.contextSwitchRequestGranted";
 NSString* const IFANotificationContextSwitchRequestDenied = @"ifa.contextSwitchRequestDenied";
 NSString* const IFANotificationMenuBarButtonItemInvalidated = @"ifa.menuBarButtonItemInvalidated";
 NSString* const IFANotificationLocationAuthorizationStatusChange = @"ifa.locationAuthorizationStatusChange";
-
-// Dictionary Keys
-NSString* const IFAKeyInsertedObjects = @"ifa.key.insertedObjects";
-NSString* const IFAKeyUpdatedObjects = @"ifa.key.updatedObjects";
-NSString* const IFAKeyDeletedObjects = @"ifa.key.deletedObjects";
-NSString* const IFAKeyUpdatedProperties = @"ifa.key.updatedProperties";
-NSString* const IFAKeyOriginalProperties = @"ifa.key.originalProperties";
-
-// Entity Config
-NSString* const IFAEntityConfigFormNameDefault = @"main";
-NSString* const IFAEntityConfigFormNameCreationShortcut = @"creationShortcut";
-
-// Entity Config
-NSString* const IFAInfoPListPreferencesClassName = @"IFAPreferencesClassName";
 
 @end

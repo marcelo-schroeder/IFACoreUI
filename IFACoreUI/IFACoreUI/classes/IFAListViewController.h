@@ -21,7 +21,6 @@
 #import "IFAFetchedResultsTableViewController.h"
 #import "IFASelectionManager.h"
 #import "UIViewController+IFACoreUI.h"
-#import "IFAHelpTarget.h"
 
 @class NSManagedObjectID;
 @class IFAFormViewController;
@@ -38,7 +37,7 @@ typedef NS_ENUM(NSUInteger, IFAListViewControllerFetchingStrategy){
     IFAListViewControllerFetchingStrategyFindEntities,
 };
 
-@interface IFAListViewController : IFAFetchedResultsTableViewController <IFAFetchedResultsTableViewControllerDataSource, IFAViewControllerDelegate, IFASelectionManagerDataSource, IFAHelpTarget>
+@interface IFAListViewController : IFAFetchedResultsTableViewController <IFAFetchedResultsTableViewControllerDataSource, IFAViewControllerDelegate, IFASelectionManagerDataSource>
 
 @property (nonatomic, strong) NSString *entityName;
 @property (nonatomic, strong) NSDate *lastRefreshAndReloadDate;

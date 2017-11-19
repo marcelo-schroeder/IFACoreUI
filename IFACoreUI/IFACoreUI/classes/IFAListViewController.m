@@ -65,7 +65,7 @@
 - (void)IFA_refreshAndReloadDataWithFetchedResultsController {
     NSError *l_error;
     if (![self.fetchedResultsController performFetch:&l_error]) {
-        [IFAUIUtils handleUnrecoverableError:l_error];
+        [IFACoreDataUtils handleUnrecoverableError:l_error];
     };
 }
 

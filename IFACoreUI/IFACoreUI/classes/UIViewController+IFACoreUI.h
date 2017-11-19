@@ -21,6 +21,7 @@
 #import "IFAPresenter.h"
 #import "CoreData/CoreData.h"
 #import "UIViewController+IFA_KNSemiModal.h"
+@import IFACoreData;
 
 @class IFAAsynchronousWorkManager;
 @class IFANavigationItemTitleView;
@@ -30,7 +31,7 @@
 @class IFAPassthroughView;
 @protocol IFAViewControllerDelegate;
 
-@interface UIViewController (IFACoreUI) <IFAPresenter>
+@interface UIViewController (IFACoreUI) <IFAPresenter, IFAPersistenceManagerValidationAlertPresenter>
 //@interface UIViewController (IFACoreUI) <IFAPresenter, UIPopoverControllerDelegate>
 
 @property (nonatomic, readonly) BOOL ifa_presentedAsModal;

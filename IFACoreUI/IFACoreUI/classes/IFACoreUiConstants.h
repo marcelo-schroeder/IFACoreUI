@@ -34,37 +34,18 @@ extern CGFloat const IFATableViewCellSeparatorDefaultInsetLeft;
 extern CGFloat const IFAIPhoneStatusBarDoubleHeight;
 extern NSTimeInterval const IFAAnimationDuration;
 
-extern NSString* const IFACacheKeyEntityConfigDictionary;
 extern NSString* const IFACacheKeyMenuViewControllersDictionary;
 
 // Notifications
-extern NSString* const IFANotificationPersistentEntityChange;
 extern NSString* const IFANotificationContextSwitchRequest;
 extern NSString* const IFANotificationContextSwitchRequestGranted;
 extern NSString* const IFANotificationContextSwitchRequestDenied;
 extern NSString* const IFANotificationMenuBarButtonItemInvalidated;
 extern NSString* const IFANotificationLocationAuthorizationStatusChange;
 
-// Dictionary Keys
-extern NSString* const IFAKeyInsertedObjects;
-extern NSString* const IFAKeyUpdatedObjects;
-extern NSString* const IFAKeyDeletedObjects;
-extern NSString* const IFAKeyUpdatedProperties;
-extern NSString* const IFAKeyOriginalProperties;
-
-// Entity Config
-extern NSString* const IFAEntityConfigFormNameDefault;
-extern NSString* const IFAEntityConfigFormNameCreationShortcut;
-
-// Info Plist
-extern NSString* const IFAInfoPListPreferencesClassName;
-
 /* enums */
 
 enum {
-
-    IFAErrorPersistenceValidation = 1000,
-    IFAErrorPersistenceDuplicateKey = 1010,
 
     IFAViewTagActionSheetCancel = 2000,
     IFAViewTagActionSheetDelete = 2010,
@@ -102,28 +83,6 @@ typedef NS_ENUM(NSUInteger, IFABarButtonItemType){
     IFABarButtonItemTypeInfo,
     IFABarButtonItemTypeUserLocation,
     IFABarButtonItemTypeList,
-};
-
-typedef NS_ENUM(NSUInteger, IFAEditorType) {
-
-    IFAEditorTypeText,
-    IFAEditorTypeDatePicker,
-    IFAEditorTypeSelectionList,
-    IFAEditorTypeForm,
-    IFAEditorTypeSegmented,
-    IFAEditorTypePicker,
-    IFAEditorTypeSwitch,
-    IFAEditorTypeNumber,
-    IFAEditorTypeTimeInterval,
-    IFAEditorTypeFullDateAndTime,
-    IFAEditorTypeNotApplicable,
-
-};
-
-typedef NS_ENUM(NSUInteger, IFADataType) {
-
-    IFADataTypeTimeInterval,
-    
 };
 
 @end

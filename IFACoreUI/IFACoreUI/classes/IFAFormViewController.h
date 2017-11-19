@@ -23,9 +23,7 @@
 #import "IFAFormTextFieldTableViewCell.h"
 #import "IFACoreUiConstants.h"
 #import "IFAFormInputAccessoryView.h"
-#import "IFAEntityConfig.h"
 #import "UIViewController+IFACoreUI.h"
-#import "IFAHelpTarget.h"
 
 @protocol IFAFormViewControllerDelegate;
 @class IFAFormSectionHeaderFooterView;
@@ -36,7 +34,7 @@
 * It implements two-way binding between view and model (<object>) by using IFACoreUI's persistent entity configuration system.
 * This class optionally collaborates with a <IFAFormViewControllerDelegate> instance set in the <formViewControllerDelegate> property.
 */
-@interface IFAFormViewController : IFATableViewController <UIActionSheetDelegate, IFAFormInputAccessoryViewDataSource, IFAViewControllerDelegate, IFAHelpTarget>
+@interface IFAFormViewController : IFATableViewController <UIActionSheetDelegate, IFAFormInputAccessoryViewDataSource, IFAViewControllerDelegate>
 /**
 * Object instance for which the form is displaying details.
 */

@@ -252,53 +252,6 @@ static UIImage *c_menuBarButtonItemImage = nil;
     return screenBounds.width > screenBounds.height;
 }
 
-+ (NSString*)stringValueForObject:(id)anObject{
-//    NSLog(@"stringValueForObject: %@", [anObject description]);
-	if (anObject==nil) {
-		return anObject;
-	}else if ([anObject isKindOfClass:[NSString class]]) {
-		return anObject;
-	}else if ([anObject isKindOfClass:[NSDate class]]) {
-		NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-		[dateFormatter setDateStyle:NSDateFormatterMediumStyle];
-		[dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
-		return [dateFormatter stringFromDate:anObject];
-	}else if ([anObject isKindOfClass:[NSManagedObject class]]) {
-		return [(NSManagedObject *)anObject ifa_longDisplayValue];
-	}else if ([anObject isKindOfClass:[NSSet class]]) {
-		if ([anObject count]==0) {
-			return @"";
-		}else {
-			NSString *l_entityName = [((NSManagedObject *) [anObject anyObject]) ifa_entityName];
-			NSArray *sortDescriptors = [[IFAPersistenceManager sharedInstance] listSortDescriptorsForEntity:l_entityName
-                                                                                          usedForRelationship:YES];
-			NSArray *sortedArray = [[anObject allObjects] sortedArrayUsingDescriptors:sortDescriptors];
-			NSMutableString *l_string = [NSMutableString string];
-			BOOL l_firstTime = YES;
-			for (NSManagedObject *l_managedObject in sortedArray) {
-				if (l_firstTime) {
-					l_firstTime = NO;
-				}else {
-					[l_string appendString:@", "];
-				}
-				[l_string appendString:[l_managedObject ifa_displayValue]];
-			}
-			return l_string;
-		}
-	}else {
-		NSAssert(NO, @"Unexpected class: %@", [[anObject class] description]);
-		return @"***UNKNOWN***";
-	}
-}
-
-+ (NSString*)stringValueForBoolean:(BOOL)aBoolean{
-    return aBoolean ? NSLocalizedStringFromTable(@"yes", @"IFALocalizable", nil) : NSLocalizedStringFromTable(@"no", @"IFALocalizable", nil);
-}
-
-+ (NSString*)onOffStringValueForBoolean:(BOOL)aBoolean{
-    return aBoolean ? NSLocalizedStringFromTable(@"on", @"IFALocalizable", nil) : NSLocalizedStringFromTable(@"off", @"IFALocalizable", nil);
-}
-
 + (void)showAndHideUserActionConfirmationHudWithText:(NSString*)a_text{
     [self showAndHideUserActionConfirmationHudWithText:a_text
                                    visualIndicatorMode:IFAHudViewVisualIndicatorModeNone
@@ -317,7 +270,7 @@ static UIImage *c_menuBarButtonItemImage = nil;
     NSString *format = NSLocalizedStringWithDefaultValue(@"ModeState", @"IFALocalizable", [NSBundle bundleForClass:[self class]], @"%@ %@", @"Example: <Adjustment mode> <off>");
     NSString *text = [NSString stringWithFormat:format,
                                                 a_text,
-                                                [IFAUIUtils onOffStringValueForBoolean:a_on]];
+                                                [IFACoreDataUtils onOffStringValueForBoolean:a_on]];
     [self IFA_presentHudViewControllerWithText:text
                            visualIndicatorMode:IFAHudViewVisualIndicatorModeNone
                               autoDismissDelay:1];
@@ -422,53 +375,6 @@ static UIImage *c_menuBarButtonItemImage = nil;
 
 + (CGRect)keyboardFrame {
     return [IFAKeyboardVisibilityManager sharedInstance].keyboardFrame;
-}
-
-+ (void) handleUnrecoverableError:(NSError *)anErrorContainer{
-    //TODO: are we losing important info here?
-    NSLog(@"Unrecoverable error - description: %@", [anErrorContainer localizedDescription]);
-    NSLog(@"Unrecoverable error - failure reason: %@", [anErrorContainer localizedFailureReason]);
-    NSArray* detailedErrors = [[anErrorContainer userInfo] objectForKey:NSDetailedErrorsKey];
-    if(detailedErrors != nil && [detailedErrors count] > 0) {
-        for(NSError* detailedError in detailedErrors) {
-            NSLog(@"Unrecoverable error - user info from detailed errors: %@", [detailedError userInfo]);
-        }
-    }else{
-        NSLog(@"Unrecoverable error - user info: %@", [anErrorContainer userInfo]);
-    }
-    NSAssert(NO, @"Unrecoverable Error: %@", [anErrorContainer localizedDescription]);
-}
-
-+ (NSError*) newErrorWithCode:(NSInteger)anErrorCode errorMessage:(NSString*)anErrorMessage{
-    NSArray *keyArray = @[NSLocalizedDescriptionKey];
-    NSArray *objArray = @[anErrorMessage];
-    NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:objArray forKeys:keyArray];
-    return [[NSError alloc] initWithDomain:IFAErrorDomainCommon code:anErrorCode userInfo:userInfo];
-}
-
-+ (NSError*) newErrorContainer{
-    NSArray *errors = [NSMutableArray array];
-    NSArray *keyArray = @[NSDetailedErrorsKey];
-    NSArray *objArray = @[errors];
-    NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:objArray forKeys:keyArray];
-    return [[NSError alloc] initWithDomain:NSCocoaErrorDomain code:NSValidationMultipleErrorsError userInfo:userInfo];
-}
-
-+ (NSError*) newErrorContainerWithError:(NSError*)anError{
-    NSError *errorContainer = [self newErrorContainer];
-    [self addError:anError toContainer:errorContainer];
-    return errorContainer;
-}
-
-+ (void) addError:(NSError*)anError toContainer:(NSError*)anErrorContainer{
-    AssertNotNil(anError);
-    AssertNotNil(anErrorContainer);
-            AssertTrue([anErrorContainer code]==NSValidationMultipleErrorsError);
-    id obj = [[anErrorContainer userInfo] valueForKey:NSDetailedErrorsKey];
-    AssertNotNil(obj);
-    AssertNotNilAndClass(obj, NSMutableArray);
-    NSMutableArray *errors = obj;
-    [errors addObject:anError];
 }
 
 + (NSString *)saveButtonTitle {

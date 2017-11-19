@@ -302,19 +302,6 @@ IFA_tableViewCellSelectedBackgroundStyleForIndexPath:(NSIndexPath *)a_indexPath
             listViewController.noDataPlaceholderAddHintImageView.image = newNoDataHelpAddHintImage;
         }
 
-    }else if ([a_viewController isKindOfClass:[IFAHelpViewController class]]) {
-
-        IFAHelpViewController *viewController = (IFAHelpViewController *) a_viewController;
-        viewController.view.backgroundColor = [UIColor clearColor];
-        [viewController.navigationBar setBackgroundImage:[UIImage ifa_imageWithColor:[UIColor clearColor]] forBarMetrics:UIBarMetricsDefault];
-        viewController.navigationBar.shadowImage = [[UIImage ifa_separatorImageForType:IFASeparatorImageTypeHorizontalTop] ifa_imageWithOverlayColor:[UIColor whiteColor]];
-
-    }else if ([a_viewController isKindOfClass:[IFAHelpContentViewController class]]) {
-
-        a_viewController.edgesForExtendedLayout = UIRectEdgeNone;
-        a_viewController.automaticallyAdjustsScrollViewInsets = NO;
-        a_viewController.view.backgroundColor = [UIColor clearColor];
-
     }else if([a_viewController isKindOfClass:[IFALazyTableDataLoadingViewController class]]) {
 
         IFALazyTableDataLoadingViewController *l_viewController = (IFALazyTableDataLoadingViewController *) a_viewController;
@@ -342,15 +329,6 @@ IFA_tableViewCellSelectedBackgroundStyleForIndexPath:(NSIndexPath *)a_indexPath
         if (l_imageName) {
             [a_viewController.navigationController.toolbar setBackgroundImage:[UIImage imageNamed:l_imageName] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
         }
-    }
-
-    UIColor *navigationBarTintColor = a_viewController.navigationController.navigationBar.tintColor;
-    [self IFA_tintCustomViewButtonImageInBarButtonItem:a_viewController.ifa_helpBarButtonItem
-                                             withColor:navigationBarTintColor];
-    if ([a_viewController isKindOfClass:[IFAHelpContentViewController class]]) {
-        IFAHelpContentViewController *helpViewController = (IFAHelpContentViewController *) a_viewController;
-        [self IFA_tintCustomViewButtonImageInBarButtonItem:helpViewController.closeBarButtonItem
-                                                 withColor:navigationBarTintColor];
     }
 
 }

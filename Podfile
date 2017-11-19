@@ -10,6 +10,8 @@ target :IFACoreUI do
   # pod 'IFAFoundation', :git => 'https://github.com/marcelo-schroeder/IFAFoundation.git', :branch => 'development'
 #pod 'IFAFoundation', :path => '/Users/mschroeder/myfiles/projects/Xcode/IFAFoundation/IFAFoundation_development'
 
+    pod 'IFACoreData', :path => '/Users/mschroeder/myfiles/projects/Xcode/IFACoreData/IFACoreData_development'
+
   target :IFACoreUITests do
     pod 'IFATestingSupport'
 #pod 'IFATestingSupport', :git => 'https://github.com/marcelo-schroeder/IFATestingSupport.git', :tag => 'v0.1.1'

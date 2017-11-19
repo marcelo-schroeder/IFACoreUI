@@ -47,10 +47,6 @@ static const CGFloat IFAMaximumImageSizeInPixels =  5 * 1024 * 1024;
 + (CGSize)screenBoundsSizeForCurrentOrientation;
 + (CGRect)screenBounds;
 
-+ (NSString*)stringValueForObject:(id)anObject;
-+ (NSString*)stringValueForBoolean:(BOOL)aBoolean;
-+ (NSString*)onOffStringValueForBoolean:(BOOL)aBoolean;
-
 /**
 * Presents a user action confirmation message using an instance of the <IFAHudViewController>, and dismisses it after a short while.
 * @param a_text Text message to by displayed by the HUD.
@@ -110,12 +106,6 @@ static const CGFloat IFAMaximumImageSizeInPixels =  5 * 1024 * 1024;
 
 + (BOOL)isKeyboardVisible;
 + (CGRect)keyboardFrame;
-
-+ (void) handleUnrecoverableError:(NSError *)anErrorContainer;
-+ (NSError*) newErrorWithCode:(NSInteger)anErrorCode errorMessage:(NSString*)anErrorMessage;
-+ (NSError*) newErrorContainer;
-+ (NSError*) newErrorContainerWithError:(NSError*)anError;
-+ (void) addError:(NSError*)anError toContainer:(NSError*)anErrorContainer;
 
 /**
 * @return Localised title for a "Save" button.

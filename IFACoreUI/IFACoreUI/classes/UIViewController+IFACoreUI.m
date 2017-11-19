@@ -1228,11 +1228,6 @@ typedef NS_ENUM(NSUInteger, IFANavigationBarButtonItemsSide) {
     
 //    NSLog(@"ifa_viewWillAppear: %@, topViewController: %@, visibleViewController: %@, presentingViewController: %@, presentedViewController: %@", [self description], [self.navigationController.topViewController description], [self.navigationController.visibleViewController description], [self.presentingViewController description], [self.presentedViewController description]);
 
-    // Add the help button if help is enabled for this view controller
-    if (self.ifa_helpBarButtonItem) {
-        [self ifa_insertRightBarButtonItem:self.ifa_helpBarButtonItem atIndex:0];
-    }
-
     // Add observers
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(ifa_onKeyboardNotification:)
@@ -1841,5 +1836,11 @@ withAlertPresenterViewController:nil];
 //- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController {
 //    [self.ifa_presenter sessionDidCompleteForViewController:self changesMade:NO data:nil shouldAnimateDismissal:NO];
 //}
+
+#pragma mark - IFAPersistenceManagerValidationAlertPresenter
+
+-(void)persistenceManager:(IFAPersistenceManager *)persistenceManager didRequestToPresentValidationAlertWithTitle:(NSString *)title message:(NSString *)message {
+    [self ifa_presentAlertControllerWithTitle:title message:message];
+}
 
 @end
