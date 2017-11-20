@@ -161,4 +161,3 @@ FOUNDATION_EXPORT const unsigned char IFACoreUIVersionString[];
 #import "IFAHudWrapperViewController.h"
 #import "NSMutableArray+IFACoreUI.h"
 #import "IFAAlertContainerViewController.h"
-#import "IFAEntityConfig+IFACoreUI.h"

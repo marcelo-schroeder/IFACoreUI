@@ -29,9 +29,4 @@
 */
 + (UIImage *)ifa_classBundleImageNamed:(NSString *)a_imageName;
 
-- (id)ifa_propertyValueForIndexPath:(NSIndexPath *)anIndexPath inForm:(NSString *)aFormName createMode:(BOOL)aCreateMode;
-- (NSString*)ifa_propertyNameForIndexPath:(NSIndexPath *)anIndexPath inForm:(NSString *)aFormName createMode:(BOOL)aCreateMode;
-- (NSString*)ifa_propertyStringValueForIndexPath:(NSIndexPath *)anIndexPath inForm:(NSString *)aFormName
-                                      createMode:(BOOL)aCreateMode calendar:(NSCalendar*)a_calendar;
-
 @end

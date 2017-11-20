@@ -335,8 +335,6 @@
 		F7B360FD1E6AD1A800CDCC47 /* TestCoreDataEntity5+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B360F21E6AD1A800CDCC47 /* TestCoreDataEntity5+CoreDataClass.m */; };
 		F7B360FE1E6AD1A800CDCC47 /* TestCoreDataEntity5+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B360F41E6AD1A800CDCC47 /* TestCoreDataEntity5+CoreDataProperties.m */; };
 		F7BEA7531FC3649900295EFF /* Dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BEA7521FC3649900295EFF /* Dummy.swift */; };
-		F7BEA75C1FC36F1F00295EFF /* IFAEntityConfig+IFACoreUI.h in Headers */ = {isa = PBXBuildFile; fileRef = F7BEA75A1FC36F1F00295EFF /* IFAEntityConfig+IFACoreUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F7BEA75D1FC36F1F00295EFF /* IFAEntityConfig+IFACoreUI.m in Sources */ = {isa = PBXBuildFile; fileRef = F7BEA75B1FC36F1F00295EFF /* IFAEntityConfig+IFACoreUI.m */; };
 		F7E49F361BF28A5000569C9A /* IFACoreUITestsModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F7E49F341BF28A5000569C9A /* IFACoreUITestsModel.xcdatamodeld */; };
 		F7FF0B051E6B95090087381E /* TestCoreDataEntity4Child+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = F7FF0B021E6B95090087381E /* TestCoreDataEntity4Child+CoreDataClass.m */; };
 		F7FF0B061E6B95090087381E /* TestCoreDataEntity4Child+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = F7FF0B041E6B95090087381E /* TestCoreDataEntity4Child+CoreDataProperties.m */; };
@@ -734,8 +732,6 @@
 		F7B360F31E6AD1A800CDCC47 /* TestCoreDataEntity5+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestCoreDataEntity5+CoreDataProperties.h"; sourceTree = "<group>"; };
 		F7B360F41E6AD1A800CDCC47 /* TestCoreDataEntity5+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TestCoreDataEntity5+CoreDataProperties.m"; sourceTree = "<group>"; };
 		F7BEA7521FC3649900295EFF /* Dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dummy.swift; sourceTree = "<group>"; };
-		F7BEA75A1FC36F1F00295EFF /* IFAEntityConfig+IFACoreUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IFAEntityConfig+IFACoreUI.h"; sourceTree = "<group>"; };
-		F7BEA75B1FC36F1F00295EFF /* IFAEntityConfig+IFACoreUI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "IFAEntityConfig+IFACoreUI.m"; sourceTree = "<group>"; };
 		F7E49F351BF28A5000569C9A /* IFACoreUITestsModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = IFACoreUITestsModel.xcdatamodel; sourceTree = "<group>"; };
 		F7FF0B011E6B95090087381E /* TestCoreDataEntity4Child+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestCoreDataEntity4Child+CoreDataClass.h"; sourceTree = "<group>"; };
 		F7FF0B021E6B95090087381E /* TestCoreDataEntity4Child+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TestCoreDataEntity4Child+CoreDataClass.m"; sourceTree = "<group>"; };
@@ -1057,8 +1053,6 @@
 				107382B94669F01368812EAA /* IFAAlertContainerViewController.m */,
 				107384428BEF6DEBAD7F15B9 /* IFAAlertContainerViewController.h */,
 				F72C559D1F423E2A00CF0AD1 /* UIViewController+IFACoreUI.swift */,
-				F7BEA75A1FC36F1F00295EFF /* IFAEntityConfig+IFACoreUI.h */,
-				F7BEA75B1FC36F1F00295EFF /* IFAEntityConfig+IFACoreUI.m */,
 			);
 			path = classes;
 			sourceTree = "<group>";
@@ -1334,7 +1328,6 @@
 				F7650D131BE95BBD00B97932 /* IFAViewControllerFadeTransitioning.h in Headers */,
 				F7650C741BE95BBD00B97932 /* IFACrashReportingUtils.h in Headers */,
 				F7650CC71BE95BBD00B97932 /* IFANavigationItemTitleView.h in Headers */,
-				F7BEA75C1FC36F1F00295EFF /* IFAEntityConfig+IFACoreUI.h in Headers */,
 				F7650C901BE95BBD00B97932 /* IFAFormNumberFieldTableViewCell.h in Headers */,
 				F7650CAF1BE95BBD00B97932 /* IFALazyTableDataLoadingViewController.h in Headers */,
 				F7650D231BE95BBE00B97932 /* NSObject+IFACoreUI.h in Headers */,
@@ -1699,7 +1692,6 @@
 				F7650C811BE95BBD00B97932 /* IFADimmedFadingOverlayViewControllerTransitioningDelegate.m in Sources */,
 				F7650CBA1BE95BBD00B97932 /* IFAMapSettingsViewController.m in Sources */,
 				F7650CE21BE95BBD00B97932 /* IFASegmentedControl.m in Sources */,
-				F7BEA75D1FC36F1F00295EFF /* IFAEntityConfig+IFACoreUI.m in Sources */,
 				F7650CBE1BE95BBD00B97932 /* IFAMenuViewController.m in Sources */,
 				F7650C621BE95BBD00B97932 /* IFABlurredFadingOverlayViewControllerTransitioningDelegate.m in Sources */,
 				F7650C681BE95BBD00B97932 /* IFACollectionViewController.m in Sources */,
