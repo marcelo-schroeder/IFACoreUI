@@ -1,1 +1,2 @@
 [NEW] New method added to IFAUIUtils: deviceSupportsVibration. This method has been moved from IFAFoundation.
+[CHANGE] CoreData related functionality moved to a new open source framework: IFACoreData.
