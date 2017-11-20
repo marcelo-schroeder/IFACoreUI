@@ -334,6 +334,7 @@
 		F7B360FC1E6AD1A800CDCC47 /* TestCoreDataEntity4+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B360F01E6AD1A800CDCC47 /* TestCoreDataEntity4+CoreDataProperties.m */; };
 		F7B360FD1E6AD1A800CDCC47 /* TestCoreDataEntity5+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B360F21E6AD1A800CDCC47 /* TestCoreDataEntity5+CoreDataClass.m */; };
 		F7B360FE1E6AD1A800CDCC47 /* TestCoreDataEntity5+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B360F41E6AD1A800CDCC47 /* TestCoreDataEntity5+CoreDataProperties.m */; };
+		F7BEA7531FC3649900295EFF /* Dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BEA7521FC3649900295EFF /* Dummy.swift */; };
 		F7E49F361BF28A5000569C9A /* IFACoreUITestsModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F7E49F341BF28A5000569C9A /* IFACoreUITestsModel.xcdatamodeld */; };
 		F7FF0B051E6B95090087381E /* TestCoreDataEntity4Child+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = F7FF0B021E6B95090087381E /* TestCoreDataEntity4Child+CoreDataClass.m */; };
 		F7FF0B061E6B95090087381E /* TestCoreDataEntity4Child+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = F7FF0B041E6B95090087381E /* TestCoreDataEntity4Child+CoreDataProperties.m */; };
@@ -730,6 +731,7 @@
 		F7B360F21E6AD1A800CDCC47 /* TestCoreDataEntity5+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TestCoreDataEntity5+CoreDataClass.m"; sourceTree = "<group>"; };
 		F7B360F31E6AD1A800CDCC47 /* TestCoreDataEntity5+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestCoreDataEntity5+CoreDataProperties.h"; sourceTree = "<group>"; };
 		F7B360F41E6AD1A800CDCC47 /* TestCoreDataEntity5+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TestCoreDataEntity5+CoreDataProperties.m"; sourceTree = "<group>"; };
+		F7BEA7521FC3649900295EFF /* Dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dummy.swift; sourceTree = "<group>"; };
 		F7E49F351BF28A5000569C9A /* IFACoreUITestsModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = IFACoreUITestsModel.xcdatamodel; sourceTree = "<group>"; };
 		F7FF0B011E6B95090087381E /* TestCoreDataEntity4Child+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestCoreDataEntity4Child+CoreDataClass.h"; sourceTree = "<group>"; };
 		F7FF0B021E6B95090087381E /* TestCoreDataEntity4Child+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TestCoreDataEntity4Child+CoreDataClass.m"; sourceTree = "<group>"; };
@@ -1252,6 +1254,7 @@
 				F7650E041BEA948900B97932 /* TempTest.h */,
 				F7650E051BEA948900B97932 /* TempTest.m */,
 				F7B360CC1E6A6B4A00CDCC47 /* IFACoreUITests-Bridging-Header.h */,
+				F7BEA7521FC3649900295EFF /* Dummy.swift */,
 			);
 			path = classes;
 			sourceTree = "<group>";
@@ -1449,6 +1452,7 @@
 					};
 					F7156C131BE953A30009EFF4 = {
 						CreatedOnToolsVersion = 7.1;
+						DevelopmentTeam = UE3CPRMBX7;
 						LastSwiftMigration = 0900;
 					};
 				};
@@ -1801,6 +1805,7 @@
 				F7B360FD1E6AD1A800CDCC47 /* TestCoreDataEntity5+CoreDataClass.m in Sources */,
 				F7650E791BEBE60700B97932 /* IFADateRangeTest.m in Sources */,
 				F7650E811BEBE60700B97932 /* NSDateTest.m in Sources */,
+				F7BEA7531FC3649900295EFF /* Dummy.swift in Sources */,
 				F7650E781BEBE60700B97932 /* IFACurrentLocationManagerTests.m in Sources */,
 				F7B360F91E6AD1A800CDCC47 /* TestCoreDataEntity3+CoreDataClass.m in Sources */,
 				F7650E861BEBE60700B97932 /* NSStringTests.m in Sources */,
@@ -1981,6 +1986,7 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = NO;
+				DEVELOPMENT_TEAM = UE3CPRMBX7;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"COCOAPODS=1",
@@ -2001,6 +2007,7 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = NO;
+				DEVELOPMENT_TEAM = UE3CPRMBX7;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"COCOAPODS=1",
